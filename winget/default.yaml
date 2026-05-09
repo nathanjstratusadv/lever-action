@@ -1,0 +1,20 @@
+PackageIdentifier: LeverAction.LeverAction
+PackageVersion: 0.1.0
+DefaultLocale: en-US
+ManifestType: default
+ManifestVersion: 1.6.0
+PackageLocale: en-US
+Publisher: Lever Action
+PackageName: Lever Action
+ShortDescription: Native Windows AI chat app
+PublisherUrl: https://github.com/yourusername/lever_action
+PublisherSupportUrl: https://github.com/yourusername/lever_action/issues
+License: MIT
+Copyright: Copyright (c) Lever Action
+CopyrightUrl: https://github.com/yourusername/lever_action/blob/main/LICENSE
+ShortDescription: Native Windows AI chat app - Aim. Shoot. Reload.
+Moniker: lever-action
+Tags:
+  - ai
+  - chat
+  - assistant

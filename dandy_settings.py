@@ -45,10 +45,10 @@ def get_llm_configs() -> dict[str, dict[str, str | int | None]]:
     settings = _load_llm_settings()
     return {
         "DEFAULT": {
-            "HOST": settings.get("host", "api.openai.com"),
+            "HOST": settings.get("host"),
             "PORT": int(settings.get("port", 443)),
             "API_KEY": settings.get("api_key"),
-            "MODEL": settings.get("model", "gpt-4o-mini"),
+            "MODEL": settings.get("model"),
         },
     }
 

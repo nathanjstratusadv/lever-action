@@ -47,3 +47,6 @@ msix:
 	New-Item -ItemType Directory -Force -Path dist\lever_action\Package
 	Copy-Item -Path AppxManifest.xml -Destination dist\lever_action\Package\AppxManifest.xml -Force
 	MakeAppx.exe package /d dist\lever_action /p lever_action.msix /v
+
+msi: package
+	$version = & .venv/Scripts/python.exe -c "from lever_action import __version__; print(__version__)" ; powershell -ExecutionPolicy Bypass -File installer\build_msi.ps1 -Version $version

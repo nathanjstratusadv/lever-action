@@ -3,17 +3,24 @@
   <Identity Name="lever_action" Publisher="CN=lever_action" Version="0.1.0.0" />
   <Properties>
     <DisplayName>Lever Action</DisplayName>
-    <PublisherDisplayName>lever_action</PublisherDisplayName>
+    <PublisherDisplayName>Lever Action</PublisherDisplayName>
+    <Logo>reticle_128x128.png</Logo>
   </Properties>
   <Resources>
     <Resource Language="en-us" />
   </Resources>
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.22621.0" />
   </Dependencies>
   <Applications>
     <Application Id="App" Executable="lever_action.exe" EntryPoint="Windows.FullTrustApplication">
-      <uap:VisualElements DisplayName="Lever Action" Description="AI Chat App" BackgroundColor="transparent" />
+      <uap:VisualElements
+        DisplayName="Lever Action"
+        Description="Native Windows AI chat app - Aim. Shoot. Reload."
+        BackgroundColor="transparent"
+        Square150x150Logo="reticle_128x128.png"
+        Square44x44Logo="reticle_48x48.png"
+        Description="AI Chat App" />
     </Application>
   </Applications>
 </Package>

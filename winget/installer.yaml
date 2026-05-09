@@ -1,0 +1,14 @@
+PackageIdentifier: LeverAction.LeverAction
+PackageVersion: 0.1.0
+InstallerLocale: en-US
+Installers:
+  - Architecture: x64
+    InstallerType: innosetup
+    InstallerUrl: https://github.com/yourusername/lever_action/releases/download/v0.1.0/LeverAction-Setup.exe
+    InstallerSha256: REPLACE_WITH_ACTUAL_HASH
+    Scope: user
+    InstallerSize: 0
+    ProductCode: "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+UpgradeBehavior: install
+ManifestType: installer
+ManifestVersion: 1.6.0
