@@ -1,17 +1,40 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 BASE_PATH = Path(__file__).parent.resolve()
 
-_SETTINGS_PATH = BASE_PATH / "settings.json"
+
+def _get_config_settings_path() -> Path:
+    return Path.home() / ".config" / "lever_action" / "settings.json"
+
+
+def _get_bundled_settings_path() -> Path | None:
+    exe_dir = Path(sys.executable).parent
+    if getattr(sys, "frozen", False):
+        base = (
+            exe_dir / "_internal" if not (exe_dir / "templates").exists() else exe_dir
+        )
+    else:
+        base = BASE_PATH
+    path = base / "settings.json"
+    return path if path.exists() else None
 
 
 def _load_llm_settings() -> dict:
-    if _SETTINGS_PATH.exists():
+    config_path = _get_config_settings_path()
+    if config_path.exists():
         try:
-            with open(_SETTINGS_PATH, encoding="utf-8") as f:
+            with open(config_path, encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, OSError):
+            pass
+    bundled = _get_bundled_settings_path()
+    if bundled:
+        try:
+            with open(bundled, encoding="utf-8") as f:
                 return json.load(f)
         except (json.JSONDecodeError, OSError):
             pass

@@ -136,7 +136,7 @@ lever_action/
 - `just clean` — Clear pytest and ruff caches
 - `just prod` — Run with pywebview (production window)
 - `just package` — Build standalone executable with PyInstaller
-- `just exe` — Run the built executable from `dist/LeverAction/LeverAction.exe`
+- `just exe` — Run the built executable from `dist/lever_action/lever_action.exe`
 - `just msix` — Create MSIX package for Windows Store (requires `just package` first)
 
 ### Testing
@@ -176,7 +176,7 @@ After running `just package`, verify the build succeeds. Look for:
 6867 INFO: Building EXE completed successfully.
 ```
 
-**CRITICAL**: If you do not run `just package`, the executable in `dist/LeverAction/` will be stale/outdated. Users who download or run the old executable will not see your changes. You MUST rebuild the executable after every code change.
+**CRITICAL**: If you do not run `just package`, the executable in `dist/lever_action/` will be stale/outdated. Users who download or run the old executable will not see your changes. You MUST rebuild the executable after every code change.
 
 ### Step 4: Verify (optional but recommended)
 Run the executable to spot-check:

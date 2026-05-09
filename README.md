@@ -102,7 +102,7 @@ The app reads these through `dandy_settings.py` and `python-dotenv`. Never commi
 just package
 ```
 
-Builds a standalone `LeverAction.exe` with PyInstaller. Find it in `dist/LeverAction/`.
+Builds a standalone `lever_action.exe` with PyInstaller. Find it in `dist/lever_action/`.
 
 ### Windows Store (MSIX)
 

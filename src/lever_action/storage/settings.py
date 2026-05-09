@@ -1,21 +1,37 @@
 from __future__ import annotations
 
 import json
-import sys
+import shutil
 import threading
 from pathlib import Path
 from typing import Any
 
+SETTINGS_VERSION = 1
+
+
+def _get_settings_dir() -> Path:
+    return Path.home() / ".config" / "lever_action"
+
 
 def _get_settings_path() -> Path:
-    exe_dir = Path(sys.executable).parent
-    if getattr(sys, "frozen", False):
-        base = (
-            exe_dir / "_internal" if not (exe_dir / "templates").exists() else exe_dir
-        )
-    else:
-        base = Path(__file__).parent.parent
-    return base / "settings.json"
+    return _get_settings_dir() / "settings.json"
+
+
+def _get_old_settings_path() -> Path:
+    return _get_settings_dir() / "settings.old.json"
+
+
+def _needs_migration(settings: dict[str, Any]) -> bool:
+    stored_version = settings.get("_version")
+    return stored_version is None or stored_version != SETTINGS_VERSION
+
+
+def _migrate_settings(path: Path) -> None:
+    old_path = _get_old_settings_path()
+    if old_path.exists():
+        old_path.unlink()
+    shutil.copy2(path, old_path)
+    path.unlink()
 
 
 class SettingsStorage:
@@ -37,17 +53,21 @@ class SettingsStorage:
         return cls._instance
 
     def _load(self) -> None:
+        self._path.parent.mkdir(parents=True, exist_ok=True)
+
         if self._path.exists():
             try:
                 with open(self._path, encoding="utf-8") as f:
                     self._settings = json.load(f)
             except (json.JSONDecodeError, OSError):
                 self._settings = {}
-        else:
-            self._settings = {}
+
+            if _needs_migration(self._settings):
+                _migrate_settings(self._path)
+                self._settings = {}
 
     def get_all(self) -> dict[str, Any]:
-        return dict(self._settings)
+        return {k: v for k, v in self._settings.items() if not k.startswith("_")}
 
     def get(self, key: str, default: Any = None) -> Any:
         return self._settings.get(key, default)
@@ -57,6 +77,7 @@ class SettingsStorage:
 
     def save(self, settings: dict[str, Any]) -> None:
         self._settings = dict(settings)
+        self._settings["_version"] = SETTINGS_VERSION
         self._path.parent.mkdir(parents=True, exist_ok=True)
         with open(self._path, "w", encoding="utf-8") as f:
             json.dump(self._settings, f, indent=4)

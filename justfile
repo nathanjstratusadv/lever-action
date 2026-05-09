@@ -41,9 +41,9 @@ package:
 	uv run pyinstaller lever_action.spec --clean -y
 
 exe:
-	.\dist\LeverAction\LeverAction.exe
+	.\dist\lever_action\lever_action.exe
 
 msix:
-	New-Item -ItemType Directory -Force -Path dist\LeverAction\Package
-	Copy-Item -Path AppxManifest.xml -Destination dist\LeverAction\Package\AppxManifest.xml -Force
-	MakeAppx.exe package /d dist\LeverAction /p lever_action.msix /v
+	New-Item -ItemType Directory -Force -Path dist\lever_action\Package
+	Copy-Item -Path AppxManifest.xml -Destination dist\lever_action\Package\AppxManifest.xml -Force
+	MakeAppx.exe package /d dist\lever_action /p lever_action.msix /v

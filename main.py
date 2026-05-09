@@ -12,6 +12,7 @@ from pathlib import Path
 from bottle import TEMPLATE_PATH, Bottle, HTTPResponse, request, static_file, template
 from dotenv import load_dotenv
 
+from lever_action import __version__
 from lever_action.services.chat_service import ChatMode, ChatService, GuidelineMode
 from lever_action.storage.history import HistoryStorage
 from lever_action.storage.sessions import SessionStore
@@ -207,8 +208,11 @@ settings_storage = SettingsStorage.get_instance()
 
 @app.route("/settings")
 def settings_get() -> HTTPResponse:
+    all_settings = settings_storage.get_all()
     return HTTPResponse(
-        body=json.dumps(settings_storage.get_all()),
+        body=json.dumps(
+            {k: v for k, v in all_settings.items() if not k.startswith("_")}
+        ),
         status=200,
         content_type="application/json",
     )
@@ -358,7 +362,7 @@ def pygments_css() -> HTTPResponse:
 
 @app.route("/")
 def index() -> str:
-    return template("index")
+    return template("index", version=__version__)
 
 
 @app.route("/chat", method="POST")
@@ -567,7 +571,7 @@ def main() -> None:
 
     try:
         webview.create_window(
-            "Lever Action",
+            f"Lever Action v{__version__}",
             url,
             width=960,
             height=720,

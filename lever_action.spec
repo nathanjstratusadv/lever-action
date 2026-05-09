@@ -14,6 +14,7 @@ a = Analysis(
         ('settings.json', '.'),
     ],
     hiddenimports=[
+        'lever_action',
         'lever_action.services.chat_service',
         'lever_action.storage.history',
         'lever_action.storage.sessions',
@@ -55,7 +56,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='LeverAction',
+    name='lever_action',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -65,7 +66,7 @@ exe = EXE(
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
-    entitlements_file=None,
+    entitlements=None,
     icon='reticle.ico',
 )
 
@@ -76,5 +77,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='LeverAction',
+    name='lever_action',
 )
