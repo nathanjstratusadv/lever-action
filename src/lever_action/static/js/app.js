@@ -1,0 +1,443 @@
+let currentMode = "fire_and_forget";
+let currentGuideline = "normal";
+let currentTarget = "";
+let currentSettings = {};
+
+const PROVIDER_FIELDS = {
+    openai: {
+        apiKey: "openai_api_key",
+        model: "openai_model",
+        baseUrl: "openai_base_url",
+    },
+    anthropic: {
+        apiKey: "anthropic_api_key",
+        model: "anthropic_model",
+        baseUrl: "anthropic_base_url",
+    },
+    google: {
+        apiKey: "google_api_key",
+        model: "google_model",
+        baseUrl: "google_base_url",
+    },
+};
+
+async function sendPrompt() {
+    const input = document.getElementById("prompt-input");
+    const btn = document.getElementById("send-btn");
+    const prompt = input.value.trim();
+
+    if (!prompt) return;
+
+    const messages = document.getElementById("messages");
+    const welcome = messages.querySelector(".welcome");
+    if (welcome) welcome.remove();
+
+    const msgEl = appendPromptOnly(prompt, currentMode);
+
+    showLoading(currentMode);
+
+    input.disabled = true;
+    btn.disabled = true;
+    document.getElementById("guideline-btn").disabled = true;
+    btn.textContent = "Reloading...";
+
+    try {
+        const res = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt }),
+        });
+
+        if (!res.ok) {
+            const errData = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+            throw new Error(errData.error || `Request failed with status ${res.status}`);
+        }
+
+        const data = await res.json();
+
+        clearLoading();
+        completeMessage(msgEl, data.response_html);
+
+        input.value = "";
+        autoResize(input);
+    } catch (err) {
+        clearLoading();
+        setErrorOnMessage(msgEl, err.message);
+    } finally {
+        input.disabled = false;
+        btn.disabled = false;
+        document.getElementById("guideline-btn").disabled = false;
+        updateButtonText();
+        input.focus();
+    }
+}
+
+async function loadLastEntry() {
+    try {
+        const res = await fetch("/history");
+        const entries = await res.json();
+        if (entries.length > 0) {
+            const messages = document.getElementById("messages");
+            messages.innerHTML = "";
+            appendMessage(entries[0].prompt, entries[0].response_html);
+        }
+    } catch (err) {
+        console.error("Failed to load history:", err);
+    }
+}
+
+function appendMessage(prompt, responseHtml, mode) {
+    const messages = document.getElementById("messages");
+    const div = document.createElement("div");
+    div.className = "message";
+    div.innerHTML = `
+        ${modeBadge(mode)}
+        <div class="prompt-label">Prompt</div>
+        <div class="prompt-text">${escapeHtml(prompt)}</div>
+        <div class="prompt-label">Response</div>
+        <div class="response-text">${responseHtml}</div>
+    `;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function modeBadge(mode) {
+    return mode === "aim_and_ask"
+        ? '<span class="mode-badge aim">Aim & Ask</span>'
+        : '<span class="mode-badge fire">Fire & Forget</span>';
+}
+
+function appendPromptOnly(prompt, mode) {
+    const messages = document.getElementById("messages");
+    const div = document.createElement("div");
+    div.className = "message";
+    div.innerHTML = `
+        ${modeBadge(mode)}
+        <div class="prompt-label">Prompt</div>
+        <div class="prompt-text">${escapeHtml(prompt)}</div>
+    `;
+    messages.appendChild(div);
+    div.scrollIntoView({ behavior: "smooth", block: "start" });
+    return div;
+}
+
+function completeMessage(el, responseHtml) {
+    el.innerHTML += `
+        <div class="prompt-label">Response</div>
+        <div class="response-text">${responseHtml}</div>
+    `;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function setErrorOnMessage(el, message) {
+    el.innerHTML += `
+        <div class="response-text" style="color: #f44;">
+            <strong>Error:</strong> ${escapeHtml(message)}
+        </div>
+    `;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function showLoading(mode) {
+    const messages = document.getElementById("messages");
+    const loading = document.createElement("div");
+    loading.className = "message";
+    loading.id = "loading-indicator";
+    const color = mode === "aim_and_ask" ? "#0078d4" : "#d43030";
+    loading.innerHTML = `
+        <div class="loading-dots" style="--dot-color: ${color};">
+            <span></span><span></span><span></span>
+        </div>
+    `;
+    messages.appendChild(loading);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function clearLoading() {
+    const el = document.getElementById("loading-indicator");
+    if (el) el.remove();
+}
+
+function autoResize(el) {
+    el.style.height = "40px";
+    const newHeight = Math.min(el.scrollHeight, 200);
+    el.style.height = newHeight + "px";
+}
+
+function handleKeydown(e) {
+    if (e.key === "Enter" && e.ctrlKey && e.shiftKey) {
+        e.preventDefault();
+        toggleGuideline();
+    } else if (e.key === "Enter" && e.ctrlKey && e.altKey) {
+        e.preventDefault();
+        openTargetModal();
+    } else if (e.key === "Enter" && e.ctrlKey) {
+        e.preventDefault();
+        toggleMode();
+    } else if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendPrompt();
+    }
+}
+
+function handleTargetKeydown(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        saveTarget();
+    } else if (e.key === "Escape") {
+        e.preventDefault();
+        closeTargetModal();
+    }
+}
+
+function openTargetModal() {
+    const overlay = document.getElementById("target-modal-overlay");
+    const input = document.getElementById("target-input");
+    overlay.style.display = "flex";
+    input.value = currentTarget;
+    setTimeout(() => input.focus(), 50);
+}
+
+function closeTargetModal(e) {
+    if (e && e.target && e.target !== document.getElementById("target-modal-overlay")) return;
+    const overlay = document.getElementById("target-modal-overlay");
+    overlay.style.display = "none";
+    refocusInput();
+}
+
+async function saveTarget() {
+    const input = document.getElementById("target-input");
+    const value = input.value.trim();
+    try {
+        const res = await fetch("/target", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ target: value }),
+        });
+        if (!res.ok) return;
+        currentTarget = value;
+        updateTargetBadge();
+        closeTargetModal();
+    } catch (err) {
+        console.error("Failed to save target:", err);
+    }
+}
+
+function openSettingsModal() {
+    const overlay = document.getElementById("settings-modal-overlay");
+    overlay.style.display = "flex";
+    populateSettingsForm();
+    setTimeout(() => document.getElementById("settings-api-key").focus(), 50);
+}
+
+function closeSettingsModal(e) {
+    if (e && e.target && e.target !== document.getElementById("settings-modal-overlay")) return;
+    document.getElementById("settings-modal-overlay").style.display = "none";
+    refocusInput();
+}
+
+function populateSettingsForm() {
+    const provider = currentSettings.llm_provider || "openai";
+    const fields = PROVIDER_FIELDS[provider];
+
+    document.getElementById("settings-provider").value = provider;
+    document.getElementById("settings-api-key").value = currentSettings[fields.apiKey] || "";
+    document.getElementById("settings-model").value = currentSettings[fields.model] || "";
+    document.getElementById("settings-base-url").value = currentSettings[fields.baseUrl] || "";
+    document.getElementById("settings-temperature").value = currentSettings.temperature ?? 0.7;
+    document.getElementById("temp-value").textContent = (currentSettings.temperature ?? 0.7).toFixed(1);
+    document.getElementById("settings-max-tokens").value = currentSettings.max_tokens || 4096;
+    document.getElementById("settings-system-prompt").value = currentSettings.system_prompt || "";
+}
+
+function onProviderChange() {
+    // Fields repopulate automatically when provider changes due to how we read values
+}
+
+function updateTempDisplay() {
+    const value = document.getElementById("settings-temperature").value;
+    document.getElementById("temp-value").textContent = parseFloat(value).toFixed(1);
+}
+
+async function loadSettings() {
+    try {
+        const res = await fetch("/settings");
+        if (!res.ok) return;
+        currentSettings = await res.json();
+    } catch (err) {
+        console.error("Failed to load settings:", err);
+    }
+}
+
+async function saveSettings() {
+    const provider = document.getElementById("settings-provider").value;
+    const fields = PROVIDER_FIELDS[provider];
+
+    const settings = {
+        ...currentSettings,
+        llm_provider: provider,
+        [fields.apiKey]: document.getElementById("settings-api-key").value,
+        [fields.model]: document.getElementById("settings-model").value,
+        [fields.baseUrl]: document.getElementById("settings-base-url").value,
+        temperature: parseFloat(document.getElementById("settings-temperature").value),
+        max_tokens: parseInt(document.getElementById("settings-max-tokens").value) || 4096,
+        system_prompt: document.getElementById("settings-system-prompt").value,
+    };
+
+    try {
+        const res = await fetch("/settings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(settings),
+        });
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.error || "Failed to save settings");
+        }
+        currentSettings = settings;
+        closeSettingsModal();
+    } catch (err) {
+        console.error("Failed to save settings:", err);
+        alert("Failed to save settings: " + err.message);
+    }
+}
+
+function updateTargetBadge() {
+    const badge = document.getElementById("target-badge");
+    if (currentTarget) {
+        badge.textContent = "Target: " + currentTarget;
+        badge.classList.remove("empty");
+        badge.classList.add("set");
+    } else {
+        badge.textContent = "Target: None";
+        badge.classList.remove("set");
+        badge.classList.add("empty");
+    }
+}
+
+async function loadTarget() {
+    try {
+        const res = await fetch("/target");
+        if (!res.ok) return;
+        const data = await res.json();
+        currentTarget = data.target;
+        updateTargetBadge();
+    } catch (err) {
+        console.error("Failed to load target:", err);
+    }
+}
+
+function updateButtonText() {
+    const sendBtn = document.getElementById("send-btn");
+    const guidelineBtn = document.getElementById("guideline-btn");
+
+    if (currentMode === "aim_and_ask") {
+        sendBtn.textContent = "Aim & Ask";
+        sendBtn.classList.remove("fire-mode");
+        sendBtn.classList.add("aim-mode");
+    } else {
+        sendBtn.textContent = "Fire & Forget";
+        sendBtn.classList.remove("aim-mode");
+        sendBtn.classList.add("fire-mode");
+    }
+
+    guidelineBtn.textContent = currentGuideline === "concise" ? "Quick" : "Steady";
+    guidelineBtn.classList.remove("quick", "steady");
+    guidelineBtn.classList.add(currentGuideline === "concise" ? "quick" : "steady");
+}
+
+function toggleMode() {
+    const next = currentMode === "fire_and_forget" ? "aim_and_ask" : "fire_and_forget";
+    setMode(next);
+}
+
+async function setMode(mode) {
+    if (mode === currentMode) return;
+
+    try {
+        const res = await fetch("/mode", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ mode }),
+        });
+
+        if (!res.ok) return;
+
+        currentMode = mode;
+        updateButtonText();
+    } catch (err) {
+        console.error("Failed to set mode:", err);
+    }
+}
+
+function toggleGuideline() {
+    const next = currentGuideline === "normal" ? "concise" : "normal";
+    setGuideline(next);
+}
+
+async function setGuideline(guideline) {
+    if (guideline === currentGuideline) return;
+
+    try {
+        const res = await fetch("/guideline", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ guideline }),
+        });
+
+        if (!res.ok) return;
+
+        currentGuideline = guideline;
+        updateGuidelinePill();
+    } catch (err) {
+        console.error("Failed to set guideline:", err);
+    }
+}
+
+function updateGuidelinePill() {
+    updateButtonText();
+}
+
+function truncate(str, max) {
+    return str.length > max ? str.slice(0, max) + "..." : str;
+}
+
+function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+function refocusInput() {
+    const input = document.getElementById("prompt-input");
+    if (!input.disabled) {
+        input.focus();
+    }
+}
+
+let idleTimer = null;
+
+function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(refocusInput, 10000);
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadLastEntry();
+    await loadTarget();
+    await loadSettings();
+    updateButtonText();
+    updateGuidelinePill();
+    const input = document.getElementById("prompt-input");
+    autoResize(input);
+    input.focus();
+
+    document.addEventListener("mousemove", resetIdleTimer);
+    document.addEventListener("keydown", resetIdleTimer);
+
+    window.addEventListener("focus", () => {
+        refocusInput();
+    });
+
+    resetIdleTimer();
+});

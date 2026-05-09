@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10">
+  <Identity Name="LeverAction" Publisher="CN=LeverAction" Version="0.1.0.0" />
+  <Properties>
+    <DisplayName>Lever Action</DisplayName>
+    <PublisherDisplayName>LeverAction</PublisherDisplayName>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Applications>
+    <Application Id="App" Executable="LeverAction.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements DisplayName="Lever Action" Description="AI Chat App" BackgroundColor="transparent" />
+    </Application>
+  </Applications>
+</Package>

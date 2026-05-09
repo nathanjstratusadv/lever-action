@@ -1,0 +1,64 @@
+[project]
+name = "lever-action"
+version = "0.1.0"
+description = "Native Windows AI chat app — Aim. Shoot. Reload."
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    "bottle>=0.12.25",
+    "dandy>=2.0.0",
+    "markdown>=3.6",
+    "platformdirs>=4.0.0",
+    "pygments>=2.18.0",
+    "python-dotenv>=1.0.0",
+    "pywebview>=5.0.0",
+]
+
+[project.scripts]
+lever-action = "main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.9.0",
+    "webtest>=3.0.0",
+    "pyinstaller>=6.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lever_action/services", "src/lever_action/storage", "src/lever_action/templates", "src/lever_action/static"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "W",
+    "I",
+    "N",
+    "UP",
+    "B",
+    "C4",
+    "SIM",
+    "RUF",
+]
+ignore = [
+    "E501",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
