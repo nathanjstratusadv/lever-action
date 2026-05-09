@@ -225,6 +225,11 @@ def settings_set() -> HTTPResponse:
         )
     settings_storage.save(body)
     settings_storage.reload()
+    import importlib
+
+    import dandy_settings
+
+    importlib.reload(dandy_settings)
     return HTTPResponse(
         body=json.dumps({"ok": True}),
         status=200,
@@ -568,8 +573,9 @@ def main() -> None:
             height=720,
             min_size=(640, 480),
             resizable=True,
+            zoomable=True,
         )
-        webview.start(gui="edgechromium")
+        webview.start(debug=False, gui="edgechromium")
     except Exception:
         logger.exception("Failed to start webview")
         raise

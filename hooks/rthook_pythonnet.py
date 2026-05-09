@@ -6,14 +6,17 @@ from pathlib import Path
 
 if getattr(sys, "frozen", False):
     base_path = Path(sys.executable).parent
-    src = base_path / "pythonnet" / "runtime" / "Python.Runtime.dll"
-    if src.exists():
-        import importlib.util
+    target_dir = base_path / "_internal" / "pythonnet"
 
-        spec = importlib.util.find_spec("pythonnet")
-        if spec and spec.origin:
-            pythonnet_dir = Path(spec.origin).parent
-            dest = pythonnet_dir / "runtime" / "Python.Runtime.dll"
-            if not dest.exists():
-                dest.parent.mkdir(exist_ok=True)
-                shutil.copy2(str(src), str(dest))
+    if not target_dir.exists():
+        meipass = getattr(sys, "_MEIPASS", None)
+        if meipass is None:
+            meipass = str(base_path / "_internal")
+
+        src_dir = Path(meipass) / "pythonnet"
+        if src_dir.exists():
+            shutil.copytree(src_dir, target_dir)
+
+    internal_path = str(base_path / "_internal")
+    if internal_path not in sys.path:
+        sys.path.insert(0, internal_path)

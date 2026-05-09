@@ -3,24 +3,6 @@ let currentGuideline = "normal";
 let currentTarget = "";
 let currentSettings = {};
 
-const PROVIDER_FIELDS = {
-    openai: {
-        apiKey: "openai_api_key",
-        model: "openai_model",
-        baseUrl: "openai_base_url",
-    },
-    anthropic: {
-        apiKey: "anthropic_api_key",
-        model: "anthropic_model",
-        baseUrl: "anthropic_base_url",
-    },
-    google: {
-        apiKey: "google_api_key",
-        model: "google_model",
-        baseUrl: "google_base_url",
-    },
-};
-
 async function sendPrompt() {
     const input = document.getElementById("prompt-input");
     const btn = document.getElementById("send-btn");
@@ -159,13 +141,16 @@ function clearLoading() {
 }
 
 function autoResize(el) {
-    el.style.height = "40px";
+    el.style.height = "48px";
     const newHeight = Math.min(el.scrollHeight, 200);
-    el.style.height = newHeight + "px";
+    el.style.height = Math.max(newHeight, 48) + "px";
 }
 
 function handleKeydown(e) {
-    if (e.key === "Enter" && e.ctrlKey && e.shiftKey) {
+    if (e.key === "," && e.ctrlKey) {
+        e.preventDefault();
+        openSettingsModal();
+    } else if (e.key === "Enter" && e.ctrlKey && e.shiftKey) {
         e.preventDefault();
         toggleGuideline();
     } else if (e.key === "Enter" && e.ctrlKey && e.altKey) {
@@ -223,11 +208,51 @@ async function saveTarget() {
     }
 }
 
-function openSettingsModal() {
+function openSettingsModal(tab = "settings") {
     const overlay = document.getElementById("settings-modal-overlay");
     overlay.style.display = "flex";
-    populateSettingsForm();
-    setTimeout(() => document.getElementById("settings-api-key").focus(), 50);
+    if (tab === "guide") {
+        switchSettingsTab("guide");
+    } else {
+        switchSettingsTab("settings");
+        populateSettingsForm();
+        setTimeout(() => document.getElementById("settings-api-key").focus(), 50);
+    }
+
+    const settingsKeyHandler = (e) => {
+        if (e.key === "Enter" && !e.shiftKey && e.target.tagName !== "TEXTAREA") {
+            e.preventDefault();
+            saveSettings();
+            document.removeEventListener("keydown", settingsKeyHandler);
+        } else if (e.key === "Escape") {
+            e.preventDefault();
+            closeSettingsModal();
+            document.removeEventListener("keydown", settingsKeyHandler);
+        }
+    };
+    document.addEventListener("keydown", settingsKeyHandler);
+}
+
+function switchSettingsTab(tabName) {
+    const tabs = document.querySelectorAll(".modal-tab");
+    const settingsContent = document.getElementById("settings-tab");
+    const guideContent = document.getElementById("guide-tab");
+
+    tabs.forEach(tab => {
+        if (tab.dataset.tab === tabName) {
+            tab.classList.add("active");
+        } else {
+            tab.classList.remove("active");
+        }
+    });
+
+    if (tabName === "settings") {
+        settingsContent.classList.remove("hidden");
+        guideContent.classList.add("hidden");
+    } else {
+        settingsContent.classList.add("hidden");
+        guideContent.classList.remove("hidden");
+    }
 }
 
 function closeSettingsModal(e) {
@@ -237,51 +262,30 @@ function closeSettingsModal(e) {
 }
 
 function populateSettingsForm() {
-    const provider = currentSettings.llm_provider || "openai";
-    const fields = PROVIDER_FIELDS[provider];
-
-    document.getElementById("settings-provider").value = provider;
-    document.getElementById("settings-api-key").value = currentSettings[fields.apiKey] || "";
-    document.getElementById("settings-model").value = currentSettings[fields.model] || "";
-    document.getElementById("settings-base-url").value = currentSettings[fields.baseUrl] || "";
-    document.getElementById("settings-temperature").value = currentSettings.temperature ?? 0.7;
-    document.getElementById("temp-value").textContent = (currentSettings.temperature ?? 0.7).toFixed(1);
-    document.getElementById("settings-max-tokens").value = currentSettings.max_tokens || 4096;
-    document.getElementById("settings-system-prompt").value = currentSettings.system_prompt || "";
-}
-
-function onProviderChange() {
-    // Fields repopulate automatically when provider changes due to how we read values
-}
-
-function updateTempDisplay() {
-    const value = document.getElementById("settings-temperature").value;
-    document.getElementById("temp-value").textContent = parseFloat(value).toFixed(1);
+    document.getElementById("settings-host").value = currentSettings.host || "";
+    document.getElementById("settings-port").value = currentSettings.port || 443;
+    document.getElementById("settings-api-key").value = currentSettings.api_key || "";
+    document.getElementById("settings-model").value = currentSettings.model || "";
 }
 
 async function loadSettings() {
     try {
         const res = await fetch("/settings");
-        if (!res.ok) return;
+        if (!res.ok) return false;
         currentSettings = await res.json();
+        return true;
     } catch (err) {
         console.error("Failed to load settings:", err);
+        return false;
     }
 }
 
 async function saveSettings() {
-    const provider = document.getElementById("settings-provider").value;
-    const fields = PROVIDER_FIELDS[provider];
-
     const settings = {
-        ...currentSettings,
-        llm_provider: provider,
-        [fields.apiKey]: document.getElementById("settings-api-key").value,
-        [fields.model]: document.getElementById("settings-model").value,
-        [fields.baseUrl]: document.getElementById("settings-base-url").value,
-        temperature: parseFloat(document.getElementById("settings-temperature").value),
-        max_tokens: parseInt(document.getElementById("settings-max-tokens").value) || 4096,
-        system_prompt: document.getElementById("settings-system-prompt").value,
+        host: document.getElementById("settings-host").value,
+        port: parseInt(document.getElementById("settings-port").value) || 443,
+        api_key: document.getElementById("settings-api-key").value,
+        model: document.getElementById("settings-model").value,
     };
 
     try {
@@ -296,6 +300,7 @@ async function saveSettings() {
         }
         currentSettings = settings;
         closeSettingsModal();
+        document.getElementById("prompt-input").focus();
     } catch (err) {
         console.error("Failed to save settings:", err);
         alert("Failed to save settings: " + err.message);
@@ -425,12 +430,48 @@ function resetIdleTimer() {
 document.addEventListener("DOMContentLoaded", async () => {
     await loadLastEntry();
     await loadTarget();
-    await loadSettings();
+    const settingsLoaded = await loadSettings();
+
+    if (!settingsLoaded || !currentSettings.api_key) {
+        openSettingsModal();
+    }
+
     updateButtonText();
     updateGuidelinePill();
     const input = document.getElementById("prompt-input");
     autoResize(input);
     input.focus();
+
+    const messagesContainer = document.getElementById("messages");
+
+    messagesContainer.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowDown" || e.key === "PageDown") {
+            e.preventDefault();
+            messagesContainer.scrollBy({ top: 100, behavior: "smooth" });
+        } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+            e.preventDefault();
+            messagesContainer.scrollBy({ top: -100, behavior: "smooth" });
+        } else if (e.key === "Home") {
+            e.preventDefault();
+            messagesContainer.scrollTo({ top: 0, behavior: "smooth" });
+        } else if (e.key === "End") {
+            e.preventDefault();
+            messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: "smooth" });
+        }
+    });
+
+    messagesContainer.setAttribute("tabindex", "0");
+
+    document.addEventListener("keydown", (e) => {
+        if (e.target === input && (e.key === "ArrowDown" || e.key === "ArrowUp") && e.ctrlKey) {
+            e.preventDefault();
+            if (e.key === "ArrowDown") {
+                messagesContainer.scrollBy({ top: 100, behavior: "smooth" });
+            } else if (e.key === "ArrowUp") {
+                messagesContainer.scrollBy({ top: -100, behavior: "smooth" });
+            }
+        }
+    });
 
     document.addEventListener("mousemove", resetIdleTimer);
     document.addEventListener("keydown", resetIdleTimer);

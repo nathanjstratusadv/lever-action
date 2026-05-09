@@ -442,9 +442,10 @@ class TestSettings:
 
     def test_post_settings_saves_and_reloads(self, client: TestApp) -> None:
         new_settings = {
-            "llm_provider": "anthropic",
-            "openai_api_key": "sk-test",
-            "anthropic_api_key": "sk-ant-test",
+            "host": "api.anthropic.com",
+            "port": 443,
+            "api_key": "sk-ant-test",
+            "model": "claude-sonnet-4-20250514",
         }
         resp = client.post(
             "/settings",
@@ -455,7 +456,8 @@ class TestSettings:
         assert resp.json["ok"] is True
 
         get_resp = client.get("/settings")
-        assert get_resp.json["llm_provider"] == "anthropic"
+        assert get_resp.json["host"] == "api.anthropic.com"
+        assert get_resp.json["model"] == "claude-sonnet-4-20250514"
 
     def test_post_settings_rejects_empty_body(self, client: TestApp) -> None:
         resp = client.post(

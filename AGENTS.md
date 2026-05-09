@@ -149,12 +149,48 @@ lever_action/
 - `main.py` routes are tested via webtest; `ChatService` unit tested in isolation
 - Use `app.config["skip_auth"] = True` in tests for auth control
 
-## Workflow
-- **ALWAYS use `just` commands — never run pytest, ruff, or python directly.** The justfile handles cleanup, environment loading, and build behavior.
-- **Always run `just test` when done making changes** to verify all tests pass
-- **Always run `just fmt` before committing** to ensure consistent formatting
-- **After completing every task, invoke the `@task-review` subagent** to verify all changes are correct and nothing was missed
-- Share the task-review findings with the user before considering the task complete
+## Task Completion Checklist
+
+**Every task must follow this sequence. IN ORDER. Do not skip any step. Do not skip `just package`.**
+
+### Step 1: Run Tests
+```
+just test
+```
+All 79 tests must pass. If any fail, fix them before proceeding.
+
+### Step 2: Lint
+```
+just fmt
+```
+Format and lint with ruff. All checks must pass.
+
+### Step 3: BUILD THE EXECUTABLE
+```
+just package
+```
+**THIS STEP IS MANDATORY. IT IS NEVER OPTIONAL. IT MUST ALWAYS RUN.**
+
+After running `just package`, verify the build succeeds. Look for:
+```
+6867 INFO: Building EXE completed successfully.
+```
+
+**CRITICAL**: If you do not run `just package`, the executable in `dist/LeverAction/` will be stale/outdated. Users who download or run the old executable will not see your changes. You MUST rebuild the executable after every code change.
+
+### Step 4: Verify (optional but recommended)
+Run the executable to spot-check:
+```
+just exe
+```
+
+## Rules
+
+- **ALWAYS use `just` commands** — never run pytest, ruff, or python directly. The justfile handles cleanup, environment loading, and build behavior.
+- **ALWAYS run `just package`** after completing any code change — the executable must be rebuilt. This is non-negotiable.
+- **NEVER skip `just package`** — the old executable will not have your changes.
+- **NEVER mark a task complete until `just package` succeeds** — if the build fails, fix it.
+- **DO NOT run `just test` or `just fmt` as a substitute for `just package`** — they are not interchangeable.
 
 ## What NOT To Do
 - Don't carry conversation history between submits in fire-and-forget mode — each submit is fresh

@@ -57,49 +57,112 @@
             </div>
         </div>
     </div>
-    <div id="settings-modal-overlay" class="modal-overlay" onclick="closeSettingsModal(event)">
-        <div class="modal-content settings-modal" onclick="event.stopPropagation()">
+    <div id="settings-modal-overlay" class="modal-overlay" onclick="closeSettingsModal(event)" tabindex="-1">
+        <div class="modal-content settings-modal" onclick="event.stopPropagation()" tabindex="-1">
             <div class="modal-header">
                 <span>Settings</span>
                 <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
             </div>
-            <div class="settings-form" id="settings-form">
-                <div class="form-group">
-                    <label for="settings-provider">LLM Provider</label>
-                    <select id="settings-provider" onchange="onProviderChange()">
-                        <option value="openai">OpenAI</option>
-                        <option value="anthropic">Anthropic</option>
-                        <option value="google">Google</option>
-                    </select>
+            <div class="modal-tabs">
+                <button class="modal-tab active" data-tab="settings" onclick="switchSettingsTab('settings')">Settings</button>
+                <button class="modal-tab" data-tab="guide" onclick="switchSettingsTab('guide')">Guide</button>
+            </div>
+            <div class="tab-content" id="settings-tab">
+                <div class="settings-form" id="settings-form">
+                    <div class="form-group">
+                        <label for="settings-host">Host</label>
+                        <input type="text" id="settings-host" placeholder="https://api.openai.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="settings-port">Port</label>
+                        <input type="number" id="settings-port" min="1" max="65535" value="443">
+                    </div>
+                    <div class="form-group">
+                        <label for="settings-api-key">API Key</label>
+                        <input type="password" id="settings-api-key" placeholder="sk-..." autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="settings-model">Model</label>
+                        <input type="text" id="settings-model" placeholder="gpt-4o-mini">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="settings-api-key">API Key</label>
-                    <input type="password" id="settings-api-key" placeholder="sk-..." autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label for="settings-model">Model</label>
-                    <input type="text" id="settings-model" placeholder="gpt-4o-mini">
-                </div>
-                <div class="form-group">
-                    <label for="settings-base-url">Base URL <span class="optional">(optional)</span></label>
-                    <input type="text" id="settings-base-url" placeholder="https://api.openai.com">
-                </div>
-                <div class="form-group">
-                    <label for="settings-temperature">Temperature: <span id="temp-value">0.7</span></label>
-                    <input type="range" id="settings-temperature" min="0" max="2" step="0.1" value="0.7" oninput="updateTempDisplay()">
-                </div>
-                <div class="form-group">
-                    <label for="settings-max-tokens">Max Tokens</label>
-                    <input type="number" id="settings-max-tokens" min="1" max="32000" value="4096">
-                </div>
-                <div class="form-group">
-                    <label for="settings-system-prompt">System Prompt <span class="optional">(optional)</span></label>
-                    <textarea id="settings-system-prompt" placeholder="You are a helpful assistant..."></textarea>
+                <div class="modal-actions">
+                    <button class="modal-btn cancel" onclick="closeSettingsModal()">Cancel</button>
+                    <button class="modal-btn save" onclick="saveSettings()">Save</button>
                 </div>
             </div>
-            <div class="modal-actions">
-                <button class="modal-btn cancel" onclick="closeSettingsModal()">Cancel</button>
-                <button class="modal-btn save" onclick="saveSettings()">Save</button>
+            <div class="tab-content hidden" id="guide-tab">
+                <div class="guide-content">
+                    <h3>Modes</h3>
+                    <div class="guide-section">
+                        <div class="guide-item">
+                            <span class="guide-label">Fire & Forget</span>
+                            <span class="guide-desc">Each message starts fresh. Great for quick, independent queries.</span>
+                        </div>
+                        <div class="guide-item">
+                            <span class="guide-label">Aim & Ask</span>
+                            <span class="guide-desc">Maintains conversation context. Best for iterative work and follow-ups.</span>
+                        </div>
+                    </div>
+                    <h3>Guideline</h3>
+                    <div class="guide-section">
+                        <div class="guide-item">
+                            <span class="guide-label">Steady</span>
+                            <span class="guide-desc">Normal response length. Balanced detail.</span>
+                        </div>
+                        <div class="guide-item">
+                            <span class="guide-label">Quick</span>
+                            <span class="guide-desc">Concise responses. Shorter, to-the-point answers.</span>
+                        </div>
+                    </div>
+                    <h3>Hot Keys</h3>
+                    <div class="guide-section">
+                        <div class="guide-item">
+                            <kbd>Ctrl + Enter</kbd>
+                            <span class="guide-desc">Send prompt</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Ctrl + T</kbd>
+                            <span class="guide-desc">Toggle mode (Fire &amp; Forget / Aim &amp; Ask)</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Ctrl + Shift + T</kbd>
+                            <span class="guide-desc">Toggle guideline (Steady / Quick)</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Ctrl + Alt + T</kbd>
+                            <span class="guide-desc">Open target modal</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Ctrl + ,</kbd>
+                            <span class="guide-desc">Open settings</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Escape</kbd>
+                            <span class="guide-desc">Close modals</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Ctrl + Up</kbd>
+                            <span class="guide-desc">Scroll messages up (while typing)</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Ctrl + Down</kbd>
+                            <span class="guide-desc">Scroll messages down (while typing)</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Arrow Up/Down</kbd>
+                            <span class="guide-desc">Scroll messages (when focused)</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Page Up/Down</kbd>
+                            <span class="guide-desc">Scroll messages by page (when focused)</span>
+                        </div>
+                    </div>
+                    <h3>Target Context</h3>
+                    <div class="guide-section">
+                        <p class="guide-desc">Add persistent context that prepends to every prompt. Click the Target badge to set.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

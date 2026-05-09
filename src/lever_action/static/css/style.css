@@ -23,12 +23,18 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .messages {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 12px;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    min-height: 0;
 }
 
 .welcome {
@@ -212,24 +218,48 @@ body {
     display: flex;
     flex-direction: row;
     gap: 8px;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .send-buttons {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    height: 48px;
+    align-items: stretch;
 }
 
 .input-wrapper {
     flex: 1;
     position: relative;
+    height: 48px;
+    display: flex;
+    align-items: stretch;
+}
+
+#prompt-input {
+    width: 100%;
+    height: 100%;
+    padding: 12px 16px;
+    background: #252526;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.4;
+    resize: none;
+    outline: none;
+    overflow-y: auto;
+    min-height: 48px;
+    max-height: 200px;
+    transition: border-color 0.15s;
 }
 
 /* Settings Button (bottom left) */
 .input-area > .settings-btn {
-    width: 46px;
-    height: 46px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -253,24 +283,6 @@ body {
     stroke: currentColor;
 }
 
-#prompt-input {
-    width: 100%;
-    padding: 12px 16px;
-    background: #252526;
-    border: 1px solid #333;
-    border-radius: 8px;
-    color: #e0e0e0;
-    font-family: inherit;
-    font-size: 15px;
-    line-height: 1.4;
-    resize: none;
-    outline: none;
-    overflow-y: auto;
-    min-height: 40px;
-    max-height: 200px;
-    transition: border-color 0.15s;
-}
-
 #prompt-input:focus {
     border-color: #0078d4;
 }
@@ -285,7 +297,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 120px;
-    height: 18px;
+    flex: 1;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -359,20 +371,22 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #2a2a2a;
+    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 4px;
+    background: #555;
+    border-radius: 5px;
+    border: 2px solid #2a2a2a;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #666;
 }
 
 /* Target Badge */
@@ -381,7 +395,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 120px;
-    height: 40px;
+    height: 48px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -431,7 +445,7 @@ body {
     border-radius: 12px;
     padding: 24px;
     width: 100%;
-    max-width: 480px;
+    max-width: 720px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
@@ -528,7 +542,103 @@ body {
 
 /* Settings Modal */
 .settings-modal {
-    max-width: 560px;
+    max-width: 800px;
+}
+
+.modal-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
+}
+
+.modal-tab {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 6px 6px 0 0;
+    color: #888;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.modal-tab:hover {
+    color: #e0e0e0;
+    background: #2d2d2d;
+}
+
+.modal-tab.active {
+    color: #0078d4;
+    background: #252526;
+    border-bottom: 2px solid #0078d4;
+}
+
+.tab-content {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.tab-content.hidden {
+    display: none;
+}
+
+.guide-content h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e0e0e0;
+    margin: 16px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.guide-content h3:first-child {
+    margin-top: 0;
+}
+
+.guide-section {
+    background: #1a1a1a;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.guide-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid #2d2d2d;
+}
+
+.guide-item:last-child {
+    border-bottom: none;
+}
+
+.guide-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0078d4;
+    min-width: 100px;
+}
+
+.guide-item kbd {
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    color: #e0e0e0;
+    min-width: 120px;
+    text-align: center;
+}
+
+.guide-desc {
+    font-size: 13px;
+    color: #888;
+    flex: 1;
 }
 
 .settings-form {
@@ -631,8 +741,8 @@ body {
     }
 
     .input-area > .settings-btn {
-        width: 46px;
-        height: 46px;
+        width: 48px;
+        height: 48px;
     }
 
     .input-area > .settings-btn svg {

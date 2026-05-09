@@ -37,6 +37,7 @@ prod:
 	{{PYTHON}} main.py
 
 package:
+	uv run python generate_icon.py
 	uv run pyinstaller lever_action.spec --clean -y
 
 exe:
