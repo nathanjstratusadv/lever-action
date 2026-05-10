@@ -107,7 +107,7 @@ jobs:
         run: winget install --id Microsoft.WingetCreate -e --accept-source-agreements --accept-package-agreements
 
       - name: Cache GitHub token
-        run: wingetcreate token --set ${{ secrets.WINGET_PUBLISH_TOKEN }}
+        run: wingetcreate token --store --token ${{ secrets.WINGET_PUBLISH_TOKEN }}
 
       - name: Submit to winget-pkgs
         env:
