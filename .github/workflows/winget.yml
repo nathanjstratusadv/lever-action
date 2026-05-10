@@ -56,43 +56,52 @@ jobs:
         run: |
           $dir = Join-Path 'manifests' (Join-Path 'n' (Join-Path 'NathanJohnson' (Join-Path 'LeverAction' $env:VERSION)))
           New-Item -ItemType Directory -Force -Path $dir | Out-Null
+          $ver = $env:VERSION.TrimStart('v')
 
-          @'
-          PackageIdentifier: NathanJohnson.LeverAction
-          PackageVersion: {{VERSION}}
-          DefaultLocale: en-US
-          ManifestType: version
-          ManifestVersion: 1.12.0
-          '@ -replace '{{VERSION}}',$env:VERSION | Out-File -FilePath (Join-Path $dir 'NathanJohnson.LeverAction.yaml') -Encoding utf8
+          $verLines = @(
+            '# yaml-language-server: $schema=https://aka.ms/winget-manifest.version.1.12.0.schema.json',
+            '',
+            "PackageIdentifier: NathanJohnson.LeverAction",
+            "PackageVersion: $ver",
+            "DefaultLocale: en-US",
+            "ManifestType: version",
+            "ManifestVersion: 1.12.0"
+          )
+          $verLines | Out-File (Join-Path $dir 'NathanJohnson.LeverAction.yaml') -Encoding utf8
 
-          @'
-          PackageIdentifier: NathanJohnson.LeverAction
-          PackageVersion: {{VERSION}}
-          MinimumOSVersion: 10.0.0.0
-          InstallerType: nullsoft
-          Installers:
-            - Architecture: x64
-              InstallerUrl: https://github.com/nathan-johnson/lever-action/releases/download/{{VERSION}}/LeverAction-Setup.exe
-              InstallerSha256: {{HASH}}
-          ManifestType: installer
-          ManifestVersion: 1.12.0
-          '@ -replace '{{VERSION}}',$env:VERSION -replace '{{HASH}}',$env:HASH | Out-File -FilePath (Join-Path $dir 'NathanJohnson.LeverAction.installer.yaml') -Encoding utf8
+          $instLines = @(
+            '# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.12.0.schema.json',
+            '',
+            "PackageIdentifier: NathanJohnson.LeverAction",
+            "PackageVersion: $ver",
+            "MinimumOSVersion: 10.0.0.0",
+            "InstallerType: nullsoft",
+            "Installers:",
+            "  - Architecture: x64",
+            "    InstallerUrl: https://github.com/nathan-johnson/lever-action/releases/download/$ver/LeverAction-Setup.exe",
+            "    InstallerSha256: $env:HASH",
+            "ManifestType: installer",
+            "ManifestVersion: 1.12.0"
+          )
+          $instLines | Out-File (Join-Path $dir 'NathanJohnson.LeverAction.installer.yaml') -Encoding utf8
 
-          @'
-          PackageIdentifier: NathanJohnson.LeverAction
-          PackageVersion: {{VERSION}}
-          PackageLocale: en-US
-          Publisher: Nathan Johnson
-          PublisherUrl: https://github.com/nathan-johnson/lever-action
-          PackageName: LeverAction
-          PackageUrl: https://github.com/nathan-johnson/lever-action
-          PackageDescription: Native Windows AI chat web app — Aim. Shoot. Reload.
-          License: MIT
-          LicenseUrl: https://github.com/nathan-johnson/lever-action/blob/main/LICENSE
-          ShortDescription: Native Windows AI chat web app
-          ManifestType: defaultLocale
-          ManifestVersion: 1.12.0
-          '@ -replace '{{VERSION}}',$env:VERSION | Out-File -FilePath (Join-Path $dir 'NathanJohnson.LeverAction.locale.en-US.yaml') -Encoding utf8
+          $locLines = @(
+            '# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.12.0.schema.json',
+            '',
+            "PackageIdentifier: NathanJohnson.LeverAction",
+            "PackageVersion: $ver",
+            "PackageLocale: en-US",
+            "Publisher: Nathan Johnson",
+            "PublisherUrl: https://github.com/nathan-johnson/lever-action",
+            "PackageName: LeverAction",
+            "PackageUrl: https://github.com/nathan-johnson/lever-action",
+            "License: MIT",
+            "LicenseUrl: https://github.com/nathan-johnson/lever-action/blob/main/LICENSE",
+            "ShortDescription: Native Windows AI chat web app",
+            "ManifestType: defaultLocale",
+            "ManifestVersion: 1.12.0"
+          )
+          $locLines | Out-File (Join-Path $dir 'NathanJohnson.LeverAction.locale.en-US.yaml') -Encoding utf8
 
       - name: Install wingetcreate
         run: winget install --id Microsoft.WingetCreate -e --accept-source-agreements --accept-package-agreements
