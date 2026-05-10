@@ -106,8 +106,8 @@ jobs:
       - name: Install wingetcreate
         run: winget install --id Microsoft.WingetCreate -e --accept-source-agreements --accept-package-agreements
 
-      - name: Login to GitHub
-        run: gh auth login --with-token <<< "${{ secrets.WINGET_PUBLISH_TOKEN }}"
+      - name: Cache GitHub token
+        run: wingetcreate token --set ${{ secrets.WINGET_PUBLISH_TOKEN }}
 
       - name: Submit to winget-pkgs
         env:
