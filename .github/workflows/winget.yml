@@ -1,0 +1,118 @@
+name: Publish to winget
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to publish
+        required: true
+        type: string
+
+jobs:
+  winget:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Install Inno Setup
+        run: winget install --id JRSoftware.InnoSetup -e --accept-source-agreements --accept-package-agreements
+
+      - name: Build installer
+        env:
+          Version: ${{ github.event.inputs.version || github.event.release.tag_name }}
+          DistDir: ${{ github.workspace }}\dist\lever_action
+          ProjectDir: ${{ github.workspace }}
+        run: |
+          & iscc installer\setup.iss
+
+      - name: Get installer hash
+        id: hash
+        run: |
+          $hash = (Get-FileHash dist\LeverAction-Setup.exe -Algorithm SHA256).Hash.ToLower()
+          echo "hash=$hash" >> $env:GITHUB_OUTPUT
+
+      - name: Create manifest directory
+        env:
+          VERSION: ${{ github.event.inputs.version || github.event.release.tag_name }}
+        run: |
+          New-Item -ItemType Directory -Force -Path "manifests\n\NathanJohnson\LeverAction\$env:VERSION"
+
+      - name: Create version manifest
+        env:
+          VERSION: ${{ github.event.inputs.version || github.event.release.tag_name }}
+        run: |
+          @'
+          PackageIdentifier: NathanJohnson.LeverAction
+          PackageVersion: {{VERSION}}
+          DefaultLocale: en-US
+          ManifestType: version
+          ManifestVersion: 1.12.0
+          '@ -replace '{{VERSION}}',$env:VERSION | Out-File -FilePath "manifests\n\NathanJohnson\LeverAction\$env:VERSION\NathanJohnson.LeverAction.yaml" -Encoding utf8
+
+      - name: Create installer manifest
+        env:
+          VERSION: ${{ github.event.inputs.version || github.event.release.tag_name }}
+          HASH: ${{ steps.hash.outputs.hash }}
+        run: |
+          @'
+          PackageIdentifier: NathanJohnson.LeverAction
+          PackageVersion: {{VERSION}}
+          MinimumOSVersion: 10.0.0.0
+          InstallerType: nullsoft
+          Installers:
+            - Architecture: x64
+              InstallerUrl: https://github.com/nathan-johnson/lever-action/releases/download/{{VERSION}}/LeverAction-Setup.exe
+              InstallerSha256: {{HASH}}
+          ManifestType: installer
+          ManifestVersion: 1.12.0
+          '@ -replace '{{VERSION}}',$env:VERSION -replace '{{HASH}}',$env:HASH | Out-File -FilePath "manifests\n\NathanJohnson\LeverAction\$env:VERSION\NathanJohnson.LeverAction.installer.yaml" -Encoding utf8
+
+      - name: Create locale manifest
+        env:
+          VERSION: ${{ github.event.inputs.version || github.event.release.tag_name }}
+        run: |
+          @'
+          PackageIdentifier: NathanJohnson.LeverAction
+          PackageVersion: {{VERSION}}
+          PackageLocale: en-US
+          Publisher: Nathan Johnson
+          PublisherUrl: https://github.com/nathan-johnson/lever-action
+          PackageName: LeverAction
+          PackageUrl: https://github.com/nathan-johnson/lever-action
+          PackageDescription: Native Windows AI chat web app — Aim. Shoot. Reload.
+          License: MIT
+          LicenseUrl: https://github.com/nathan-johnson/lever-action/blob/main/LICENSE
+          ShortDescription: Native Windows AI chat web app
+          ManifestType: defaultLocale
+          ManifestVersion: 1.12.0
+          '@ -replace '{{VERSION}}',$env:VERSION | Out-File -FilePath "manifests\n\NathanJohnson\LeverAction\$env:VERSION\NathanJohnson.LeverAction.locale.en-US.yaml" -Encoding utf8
+
+      - name: Install wingetcreate
+        run: winget install --id Microsoft.WingetCreate -e --accept-source-agreements --accept-package-agreements
+
+      - name: Validate manifest
+        env:
+          VERSION: ${{ github.event.inputs.version || github.event.release.tag_name }}
+        run: |
+          $manifest = "manifests\n\NathanJohnson\LeverAction\$env:VERSION\NathanJohnson.LeverAction.yaml"
+          wingetcreate validate --manifest $manifest
+
+      - name: Submit to winget-pkgs
+        uses: microsoft/winget-create-action@v1
+        with:
+          token: ${{ secrets.WINGET_PUBLISH_TOKEN }}
+          manifest-file: manifests/n/NathanJohnson/LeverAction
+          version: ${{ github.event.inputs.version || github.event.release.tag_name }}

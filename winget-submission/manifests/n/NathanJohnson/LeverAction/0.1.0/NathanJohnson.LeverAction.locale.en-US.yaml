@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.12.0.schema.json
+
+PackageIdentifier: NathanJohnson.LeverAction
+PackageVersion: 0.1.0
+PackageLocale: en-US
+Publisher: Nathan Johnson
+PublisherUrl: https://github.com/nathan-johnson/lever-action
+PackageName: LeverAction
+PackageUrl: https://github.com/nathan-johnson/lever-action
+PackageDescription: Native Windows AI chat web app — Aim. Shoot. Reload.
+License: MIT
+LicenseUrl: https://github.com/nathan-johnson/lever-action/blob/main/LICENSE
+ShortDescription: Native Windows AI chat web app
+ManifestType: defaultLocale
+ManifestVersion: 1.12.0
