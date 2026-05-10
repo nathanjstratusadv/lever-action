@@ -114,4 +114,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.WINGET_PUBLISH_TOKEN }}
         run: |
           $manifest = "manifests\n\NathanJohnson\LeverAction\$env:VERSION\NathanJohnson.LeverAction.yaml"
-          wingetcreate submit --manifest $manifest --token $env:GITHUB_TOKEN
+          wingetcreate submit -t $env:GITHUB_TOKEN -n $manifest
