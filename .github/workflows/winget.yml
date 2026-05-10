@@ -30,6 +30,11 @@ jobs:
       - name: Install Inno Setup
         run: winget install --id JRSoftware.InnoSetup -e --accept-source-agreements --accept-package-agreements; exit 0
 
+      - name: Build PyInstaller package
+        run: |
+          uv run python generate_icon.py
+          uv run pyinstaller lever_action.spec --clean -y
+
       - name: Build installer
         env:
           Version: ${{ github.event.inputs.version || github.event.release.tag_name }}
