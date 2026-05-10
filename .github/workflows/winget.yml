@@ -106,10 +106,12 @@ jobs:
       - name: Install wingetcreate
         run: winget install --id Microsoft.WingetCreate -e --accept-source-agreements --accept-package-agreements
 
+      - name: Login to GitHub
+        run: gh auth login --with-token <<< "${{ secrets.WINGET_PUBLISH_TOKEN }}"
+
       - name: Submit to winget-pkgs
         env:
           VERSION: ${{ github.event.inputs.version || github.event.release.tag_name }}
-          GITHUB_TOKEN: ${{ secrets.WINGET_PUBLISH_TOKEN }}
         run: |
           $dir = Join-Path 'manifests' (Join-Path 'n' (Join-Path 'NathanJohnson' (Join-Path 'LeverAction' $env:VERSION)))
-          wingetcreate submit -t $env:GITHUB_TOKEN -n $dir
+          wingetcreate submit -n $dir
