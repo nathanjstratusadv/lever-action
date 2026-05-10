@@ -28,7 +28,7 @@ jobs:
         run: uv sync
 
       - name: Install Inno Setup
-        run: winget install --id JRSoftware.InnoSetup -e --accept-source-agreements --accept-package-agreements
+        run: winget install --id JRSoftware.InnoSetup -e --accept-source-agreements --accept-package-agreements; exit 0
 
       - name: Build installer
         env:
