@@ -103,16 +103,10 @@ jobs:
       - name: Install wingetcreate
         run: winget install --id Microsoft.WingetCreate -e --accept-source-agreements --accept-package-agreements
 
-      - name: Validate manifest
+      - name: Submit to winget-pkgs
         env:
           VERSION: ${{ github.event.inputs.version || github.event.release.tag_name }}
+          GITHUB_TOKEN: ${{ secrets.WINGET_PUBLISH_TOKEN }}
         run: |
           $manifest = "manifests\n\NathanJohnson\LeverAction\$env:VERSION\NathanJohnson.LeverAction.yaml"
-          wingetcreate validate --manifest $manifest
-
-      - name: Submit to winget-pkgs
-        uses: microsoft/winget-create-action@v1
-        with:
-          token: ${{ secrets.WINGET_PUBLISH_TOKEN }}
-          manifest-file: manifests/n/NathanJohnson/LeverAction
-          version: ${{ github.event.inputs.version || github.event.release.tag_name }}
+          wingetcreate submit --manifest $manifest --token $env:GITHUB_TOKEN
