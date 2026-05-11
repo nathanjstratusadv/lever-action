@@ -106,12 +106,25 @@ jobs:
       - name: Install wingetcreate
         run: winget install --id Microsoft.WingetCreate -e --accept-source-agreements --accept-package-agreements
 
-      - name: Cache GitHub token
-        run: wingetcreate token --store --token ${{ secrets.WINGET_PUBLISH_TOKEN }}
-
       - name: Submit to winget-pkgs
         env:
           VERSION: ${{ github.event.inputs.version || github.event.release.tag_name }}
+          GH_TOKEN: ${{ secrets.WINGET_PUBLISH_TOKEN }}
         run: |
           $dir = Join-Path 'manifests' (Join-Path 'n' (Join-Path 'NathanJohnson' (Join-Path 'LeverAction' $env:VERSION)))
-          wingetcreate submit -n $dir
+
+          # Fork winget-pkgs if needed
+          gh repo fork microsoft/winget-pkgs --clone --remote --with-remote
+
+          # Copy manifests
+          $target = Join-Path 'winget-pkgs' (Join-Path 'manifests' (Join-Path 'n' (Join-Path 'NathanJohnson' (Join-Path 'LeverAction' $env:VERSION))))
+          New-Item -ItemType Directory -Force -Path $target | Out-Null
+          Copy-Item (Join-Path $dir '*') $target -Force
+
+          # Create PR
+          cd winget-pkgs
+          git checkout -b "add-NathanJohnson.LeverAction.$env:VERSION"
+          git add manifests/n/NathanJohnson/LeverAction/$env:VERSION
+          git commit -m "Add NathanJohnson.LeverAction $env:VERSION"
+          git push origin HEAD
+          gh pr create --repo microsoft/winget-pkgs --title "Add NathanJohnson.LeverAction $env:VERSION" --body "Add NathanJohnson.LeverAction $env:VERSION"
