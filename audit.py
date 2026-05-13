@@ -1,7 +1,8 @@
 import re
 
 # 1. CSS brace balance
-css = open("src/lever_action/static/css/style.css").read()
+with open("src/lever_action/static/css/style.css") as f:
+    css = f.read()
 opens = css.count("{")
 closes = css.count("}")
 print(
@@ -9,7 +10,8 @@ print(
 )
 
 # 2. Template HTML tag balance
-tpl = open("src/lever_action/templates/index.tpl").read()
+with open("src/lever_action/templates/index.tpl") as f:
+    tpl = f.read()
 clean = re.sub(r"<style>.*?</style>", "", tpl, flags=re.DOTALL)
 clean = re.sub(r"<script.*?src=.*?</script>", "", clean, flags=re.DOTALL)
 tags = re.findall(r"<(\/?)(\w+)(?:\s[^>]*)?>", clean)
@@ -36,7 +38,8 @@ else:
         print(e)
 
 # 3. Verify resetChat SVG matches template welcome SVG
-js = open("src/lever_action/static/js/app.js").read()
+with open("src/lever_action/static/js/app.js") as f:
+    js = f.read()
 tpl_svg = re.search(r'<svg class="welcome-icon".*?</svg>', tpl, re.DOTALL)
 js_svg = re.search(r'<svg class="welcome-icon".*?</svg>', js, re.DOTALL)
 if tpl_svg and js_svg:
@@ -91,7 +94,8 @@ else:
     print("Old color check: PASS (none found)")
 
 # 7. Check pygments.css exists and has content
-pyg = open("src/lever_action/static/css/pygments.css").read()
+with open("src/lever_action/static/css/pygments.css") as f:
+    pyg = f.read()
 print(f"pygments.css: {'PASS' if len(pyg) > 100 else 'FAIL'} ({len(pyg)} bytes)")
 
 # 8. Verify CSS var cross-reference

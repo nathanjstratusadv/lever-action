@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [0.3.0] - 2026-05-12
 
 ### Added
 - Persistent settings storage with automatic version migration

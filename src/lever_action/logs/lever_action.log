@@ -147,3 +147,84 @@ requests.exceptions.InvalidSchema: No connection adapters were found for '://:44
 2026-05-12 22:20:15 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
 2026-05-12 22:20:15 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
 2026-05-12 22:20:15 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:24:21 [INFO] __main__: Lever Action starting...
+2026-05-12 22:24:21 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:24:23 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:24:26 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:24:27 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 463
+2026-05-12 22:24:27 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:24:27 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:24:27 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:24:27 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:25:49 [INFO] __main__: Lever Action starting...
+2026-05-12 22:25:50 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:25:51 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:25:58 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:25:58 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 463
+2026-05-12 22:25:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:25:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:25:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:25:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:28:46 [INFO] __main__: Lever Action starting...
+2026-05-12 22:28:46 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:28:48 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:28:55 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:28:56 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 463
+2026-05-12 22:28:56 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:28:56 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:28:56 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:28:56 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:29:58 [INFO] __main__: Lever Action starting...
+2026-05-12 22:29:58 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:30:00 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:30:12 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:30:13 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 463
+2026-05-12 22:30:13 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:30:13 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:30:13 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:30:13 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:30:53 [INFO] __main__: Lever Action starting...
+2026-05-12 22:30:53 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:30:55 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:31:31 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:31:33 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1064
+2026-05-12 22:31:33 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:31:33 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:31:33 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:31:33 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:33:06 [INFO] __main__: Lever Action starting...
+2026-05-12 22:33:06 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:33:08 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:33:17 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:33:18 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1058
+2026-05-12 22:33:18 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:33:18 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:33:18 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:33:18 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:35:14 [INFO] __main__: Lever Action starting...
+2026-05-12 22:35:14 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:35:17 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:35:24 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:35:26 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1168
+2026-05-12 22:35:26 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:35:26 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:35:26 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:35:26 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:35:37 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:35:38 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 439
+2026-05-12 22:35:38 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:35:38 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:35:38 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:35:38 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:35:46 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:35:46 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 422
+2026-05-12 22:35:46 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:35:46 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:35:46 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:35:46 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:35:55 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:35:58 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1558
+2026-05-12 22:35:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:35:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:35:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:35:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
