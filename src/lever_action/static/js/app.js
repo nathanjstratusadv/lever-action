@@ -63,7 +63,15 @@ function resetChat() {
     const messages = document.getElementById("messages");
     messages.innerHTML = `
         <div class="welcome">
-            <h1>Aim. Shoot. Reload.</h1>
+            <h1>AIM • SHOOT • RELOAD</h1>
+            <div class="welcome-star-container">
+                <svg class="welcome-star-back" width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+                </svg>
+                <svg class="welcome-star-front" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+                </svg>
+            </div>
             <p>Type a prompt below to fire your first shot.</p>
         </div>
     `;
@@ -92,9 +100,9 @@ function appendMessage(prompt, responseHtml, mode) {
     div.className = "message";
     div.innerHTML = `
         ${modeBadge(mode)}
-        <div class="prompt-label">Prompt</div>
+        <div class="entry-gap"></div>
         <div class="prompt-text">${escapeHtml(prompt)}</div>
-        <div class="prompt-label">Response</div>
+        <div class="entry-gap response-gap"></div>
         <div class="response-text">${responseHtml}</div>
     `;
     messages.appendChild(div);
@@ -113,7 +121,7 @@ function appendPromptOnly(prompt, mode) {
     div.className = "message";
     div.innerHTML = `
         ${modeBadge(mode)}
-        <div class="prompt-label">Prompt</div>
+        <div class="entry-gap"></div>
         <div class="prompt-text">${escapeHtml(prompt)}</div>
     `;
     messages.appendChild(div);
@@ -123,7 +131,7 @@ function appendPromptOnly(prompt, mode) {
 
 function completeMessage(el, responseHtml) {
     el.innerHTML += `
-        <div class="prompt-label">Response</div>
+        <div class="entry-gap response-gap"></div>
         <div class="response-text">${responseHtml}</div>
     `;
     el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -131,7 +139,7 @@ function completeMessage(el, responseHtml) {
 
 function setErrorOnMessage(el, message) {
     el.innerHTML += `
-        <div class="response-text" style="color: #f44;">
+        <div class="response-text" style="color: #e04030;">
             <strong>Error:</strong> ${escapeHtml(message)}
         </div>
     `;
@@ -143,7 +151,7 @@ function showLoading(mode) {
     const loading = document.createElement("div");
     loading.className = "message";
     loading.id = "loading-indicator";
-    const color = mode === "aim_and_ask" ? "#0078d4" : "#d43030";
+    const color = mode === "aim_and_ask" ? "#2a5a8a" : "#c0392b";
     loading.innerHTML = `
         <div class="loading-dots" style="--dot-color: ${color};">
             <span></span><span></span><span></span>

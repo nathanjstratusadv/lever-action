@@ -1,0 +1,149 @@
+2026-05-12 19:22:34 [INFO] __main__: Lever Action starting...
+2026-05-12 19:22:34 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 19:22:36 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 19:22:53 [ERROR] __main__: Chat processing failed
+Traceback (most recent call last):
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\main.py", line 390, in chat
+    response_intel = chat_service.process(prompt)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\src\lever_action\services\chat_service.py", line 102, in process
+    response_intel = Bot(guidelines=guidelines).process(full_prompt)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\bot\bot.py", line 79, in process
+    return self.llm.prompt_to_intel(**kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\service.py", line 67, in prompt_to_intel
+    return self._llm_connector.prompt_to_intel(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        prompt=prompt,
+        ^^^^^^^^^^^^^^
+    ...<11 lines>...
+        replace_message_history=replace_message_history,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 136, in prompt_to_intel
+    response_intel_object = self._request_to_intel()
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 156, in _request_to_intel
+    self._http_request_to_response_str()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 66, in _http_request_to_response_str
+    self.response_str = http_connector.request_to_response(
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request_intel=self.llm_config.http_request_intel
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).json_data['choices'][0]['message']['content']
+    ^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\http\connector.py", line 23, in request_to_response
+    response_intel = request_intel.to_http_response_intel()
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\http\intelligence\intel.py", line 72, in to_http_response_intel
+    response = requests.request(
+        method=self.method,
+    ...<7 lines>...
+        timeout=settings.HTTP_CONNECTION_TIMEOUT_SECONDS,
+    )
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 697, in send
+    adapter = self.get_adapter(url=request.url)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 792, in get_adapter
+    raise InvalidSchema(f"No connection adapters were found for {url!r}")
+requests.exceptions.InvalidSchema: No connection adapters were found for '://:443api.anthropic.com/v1/chat/completions'
+2026-05-12 19:22:53 [DEBUG] __main__: Request body: {'prompt': 'Give me info'}
+2026-05-12 21:21:43 [INFO] __main__: Lever Action starting...
+2026-05-12 21:21:44 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 21:21:45 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 21:58:08 [INFO] __main__: Lever Action starting...
+2026-05-12 21:58:08 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 21:58:09 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:00:48 [INFO] __main__: Lever Action starting...
+2026-05-12 22:00:48 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:00:49 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:02:08 [INFO] __main__: Lever Action starting...
+2026-05-12 22:02:08 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:02:09 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:03:16 [INFO] __main__: Lever Action starting...
+2026-05-12 22:03:16 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:03:18 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:06:53 [INFO] __main__: Lever Action starting...
+2026-05-12 22:06:53 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:06:55 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:07:34 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:07:35 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1369
+2026-05-12 22:07:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:07:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:07:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:07:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:07:42 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:07:43 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 476
+2026-05-12 22:07:43 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:07:43 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:07:43 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:07:43 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:07:56 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:08:01 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 4048
+2026-05-12 22:08:01 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:08:01 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:08:01 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:08:01 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:11:40 [INFO] __main__: Lever Action starting...
+2026-05-12 22:11:40 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:11:42 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:11:49 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:11:50 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 444
+2026-05-12 22:11:50 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:11:50 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:11:50 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:11:50 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:11:53 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:11:53 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 514
+2026-05-12 22:11:53 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:11:53 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:11:53 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:11:53 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:12:05 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:12:07 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1469
+2026-05-12 22:12:08 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:12:08 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:12:08 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:12:08 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:12:29 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:12:36 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 3401
+2026-05-12 22:12:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:12:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:12:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:12:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:14:21 [INFO] __main__: Lever Action starting...
+2026-05-12 22:14:21 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-12 22:14:23 [WARNING] __main__: 404: /favicon.ico
+2026-05-12 22:15:18 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:15:19 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 839
+2026-05-12 22:15:19 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:15:19 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:15:19 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:15:19 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:15:30 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:15:31 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1175
+2026-05-12 22:15:31 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:15:31 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:15:31 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:15:31 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:15:52 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:15:57 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 2581
+2026-05-12 22:15:57 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:15:57 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:15:57 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:15:57 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:16:06 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:16:09 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 2028
+2026-05-12 22:16:09 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:16:09 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:16:09 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:16:09 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-12 22:20:02 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-12 22:20:15 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 6890
+2026-05-12 22:20:15 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-12 22:20:15 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-12 22:20:15 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-12 22:20:15 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".

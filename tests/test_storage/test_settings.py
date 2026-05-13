@@ -7,7 +7,6 @@ from unittest.mock import patch
 from lever_action.storage.settings import (
     SETTINGS_VERSION,
     SettingsStorage,
-    _get_old_settings_path,
     _get_settings_dir,
     _get_settings_path,
     _needs_migration,
@@ -59,44 +58,31 @@ class TestSettingsStorage:
     def test_migration_occurs_on_version_mismatch(self, tmp_path: Path) -> None:
         SettingsStorage._instance = None
         settings_path = tmp_path / "settings.json"
-        old_path = tmp_path / "settings.old.json"
         settings_path.write_text(json.dumps({"_version": 0, "key": "old"}))
-        with (
-            patch(
-                "lever_action.storage.settings._get_settings_path",
-                return_value=settings_path,
-            ),
-            patch(
-                "lever_action.storage.settings._get_old_settings_path",
-                return_value=old_path,
-            ),
+        with patch(
+            "lever_action.storage.settings._get_settings_path",
+            return_value=settings_path,
         ):
             storage = SettingsStorage.get_instance()
-            assert not settings_path.exists()
-            assert old_path.exists()
-            assert storage._settings == {}
+            assert settings_path.exists()
+            data = json.loads(settings_path.read_text())
+            assert data["_version"] == SETTINGS_VERSION
+            assert data["key"] == "old"
+            assert storage._settings["key"] == "old"
         SettingsStorage._instance = None
 
     def test_no_migration_when_version_matches(self, tmp_path: Path) -> None:
         SettingsStorage._instance = None
         settings_path = tmp_path / "settings.json"
-        old_path = tmp_path / "settings.old.json"
         settings_path.write_text(
             json.dumps({"_version": SETTINGS_VERSION, "key": "val"})
         )
-        with (
-            patch(
-                "lever_action.storage.settings._get_settings_path",
-                return_value=settings_path,
-            ),
-            patch(
-                "lever_action.storage.settings._get_old_settings_path",
-                return_value=old_path,
-            ),
+        with patch(
+            "lever_action.storage.settings._get_settings_path",
+            return_value=settings_path,
         ):
             storage = SettingsStorage.get_instance()
             assert settings_path.exists()
-            assert not old_path.exists()
             assert storage._settings["key"] == "val"
         SettingsStorage._instance = None
 
@@ -135,6 +121,6 @@ class TestPaths:
         assert ".config" in path.parts
 
     def test_old_settings_path_is_in_settings_dir(self) -> None:
-        path = _get_old_settings_path()
+        path = _get_settings_dir() / "settings.old.json"
         assert path.name == "settings.old.json"
         assert ".config" in path.parts

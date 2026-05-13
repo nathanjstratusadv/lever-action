@@ -6,13 +6,46 @@
     <title>Lever Action v{{ version }}</title>
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/pygments.css">
+    <style>
+        .welcome h1 {
+            font-size: 28px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .welcome-star-container {
+            display: flex;
+            justify-content: center;
+            margin: 16px 0;
+            position: relative;
+            height: 48px;
+        }
+
+        .welcome-star-back {
+            position: absolute;
+            color: #6a4020;
+        }
+
+        .welcome-star-front {
+            position: relative;
+            color: #b87333;
+        }
+    </style>
 </head>
 <body>
     <div class="app">
         <main class="chat-area">
             <div class="messages" id="messages">
                 <div class="welcome">
-                    <h1>Aim. Shoot. Reload.</h1>
+                    <h1>AIM • SHOOT • RELOAD</h1>
+                    <div class="welcome-star-container">
+                        <svg class="welcome-star-back" width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+                        </svg>
+                        <svg class="welcome-star-front" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+                        </svg>
+                    </div>
                     <p>Type a prompt below to fire your first shot.</p>
                 </div>
             </div>
@@ -59,13 +92,10 @@
     </div>
     <div id="settings-modal-overlay" class="modal-overlay" onclick="closeSettingsModal(event)" tabindex="-1">
         <div class="modal-content settings-modal" onclick="event.stopPropagation()" tabindex="-1">
-            <div class="modal-header">
-                <span>Settings</span>
-                <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
-            </div>
             <div class="modal-tabs">
                 <button class="modal-tab active" data-tab="settings" onclick="switchSettingsTab('settings')">Settings</button>
                 <button class="modal-tab" data-tab="guide" onclick="switchSettingsTab('guide')">Guide</button>
+                <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
             </div>
             <div class="tab-content" id="settings-tab">
                 <div class="settings-form" id="settings-form">

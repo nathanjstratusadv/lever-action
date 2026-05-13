@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import shutil
 import threading
 from pathlib import Path
 from typing import Any
@@ -17,21 +16,9 @@ def _get_settings_path() -> Path:
     return _get_settings_dir() / "settings.json"
 
 
-def _get_old_settings_path() -> Path:
-    return _get_settings_dir() / "settings.old.json"
-
-
 def _needs_migration(settings: dict[str, Any]) -> bool:
     stored_version = settings.get("_version")
     return stored_version is None or stored_version != SETTINGS_VERSION
-
-
-def _migrate_settings(path: Path) -> None:
-    old_path = _get_old_settings_path()
-    if old_path.exists():
-        old_path.unlink()
-    shutil.copy2(path, old_path)
-    path.unlink()
 
 
 class SettingsStorage:
@@ -63,8 +50,10 @@ class SettingsStorage:
                 self._settings = {}
 
             if _needs_migration(self._settings):
-                _migrate_settings(self._path)
-                self._settings = {}
+                self._settings["_version"] = SETTINGS_VERSION
+                self._path.parent.mkdir(parents=True, exist_ok=True)
+                with open(self._path, "w", encoding="utf-8") as f:
+                    json.dump(self._settings, f, indent=4)
 
     def get_all(self) -> dict[str, Any]:
         return {k: v for k, v in self._settings.items() if not k.startswith("_")}
