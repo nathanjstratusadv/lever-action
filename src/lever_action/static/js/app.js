@@ -2,6 +2,8 @@ let currentMode = "fire_and_forget";
 let currentGuideline = "normal";
 let currentTarget = "";
 let currentSettings = {};
+let promptHistory = [];
+let promptHistoryIndex = -1;
 
 async function sendPrompt() {
     const input = document.getElementById("prompt-input");
@@ -9,6 +11,9 @@ async function sendPrompt() {
     const prompt = input.value.trim();
 
     if (!prompt) return;
+
+    promptHistory.unshift(prompt);
+    promptHistoryIndex = -1;
 
     const messages = document.getElementById("messages");
     const welcome = messages.querySelector(".welcome");
@@ -52,6 +57,19 @@ async function sendPrompt() {
         updateButtonText();
         input.focus();
     }
+}
+
+function resetChat() {
+    const messages = document.getElementById("messages");
+    messages.innerHTML = `
+        <div class="welcome">
+            <h1>Aim. Shoot. Reload.</h1>
+            <p>Type a prompt below to fire your first shot.</p>
+        </div>
+    `;
+    promptHistory = [];
+    promptHistoryIndex = -1;
+    refocusInput();
 }
 
 async function loadLastEntry() {
@@ -150,6 +168,9 @@ function handleKeydown(e) {
     if (e.key === "," && e.ctrlKey) {
         e.preventDefault();
         openSettingsModal();
+    } else if (e.key === "r" && e.ctrlKey) {
+        e.preventDefault();
+        resetChat();
     } else if (e.key === "Enter" && e.ctrlKey && e.shiftKey) {
         e.preventDefault();
         toggleGuideline();
@@ -159,6 +180,32 @@ function handleKeydown(e) {
     } else if (e.key === "Enter" && e.ctrlKey) {
         e.preventDefault();
         toggleMode();
+    } else if (e.key === "ArrowUp" && !e.ctrlKey) {
+        const input = document.getElementById("prompt-input");
+        if (promptHistory.length > 0) {
+            e.preventDefault();
+            if (promptHistoryIndex === -1) {
+                promptHistoryIndex = 0;
+            } else if (promptHistoryIndex < promptHistory.length - 1) {
+                promptHistoryIndex++;
+            }
+            input.value = promptHistory[promptHistoryIndex];
+            autoResize(input);
+        }
+    } else if (e.key === "ArrowDown" && !e.ctrlKey) {
+        const input = document.getElementById("prompt-input");
+        if (promptHistory.length > 0 && promptHistoryIndex !== -1) {
+            e.preventDefault();
+            if (promptHistoryIndex > 0) {
+                promptHistoryIndex--;
+                input.value = promptHistory[promptHistoryIndex];
+                autoResize(input);
+            } else {
+                promptHistoryIndex = -1;
+                input.value = "";
+                autoResize(input);
+            }
+        }
     } else if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         sendPrompt();
@@ -445,6 +492,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const messagesContainer = document.getElementById("messages");
 
     messagesContainer.addEventListener("keydown", (e) => {
+        const selection = window.getSelection();
+        const hasSelection = selection && selection.toString().length > 0;
+        if (hasSelection) return;
         if (e.key === "ArrowDown" || e.key === "PageDown") {
             e.preventDefault();
             messagesContainer.scrollBy({ top: 100, behavior: "smooth" });

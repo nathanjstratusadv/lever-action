@@ -100,6 +100,6 @@ class ChatService:
             return self._aim_bot.process(full_prompt)
 
         response_intel = Bot(guidelines=guidelines).process(full_prompt)
-        self._last_fire_prompt = prompt
+        self._last_fire_prompt = full_prompt
         self._last_fire_response = response_intel.text
         return response_intel

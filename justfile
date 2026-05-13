@@ -9,6 +9,9 @@ export PYTHONPATH := "src"
 default:
 	@just --list --no-aliases
 
+venv:
+	uv venv
+
 run:
 	{{PYTHON}} main.py
 
