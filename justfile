@@ -47,13 +47,8 @@ exe:
 	.\dist\lever_action\lever_action.exe
 
 release: package
-	$version = & {{PYTHON}} -c "from lever_action import __version__; print(__version__)"
-	git tag v$version
-	$env:DistDir = "$PWD\dist\lever_action"
-	& iscc installer\setup.iss
-	git add -A && git commit -m "Release v$version" || true
-	git push
-	& "C:\Program Files\GitHub CLI\gh.exe" release create v$version dist\LeverAction-Setup.exe --title "Lever Action v$version" --notes "Release" --repo nathanjstratusadv/lever-action
+	$env:PATH += ";C:\Users\druge\AppData\Local\Programs\Inno Setup 6"
+	$version = & {{PYTHON}} -c "from lever_action import __version__; print(__version__)" ; git tag v$version ; $env:DistDir = "$PWD\dist\lever_action" ; & iscc installer\setup.iss ; git add -A ; git commit -m "Release v$version" ; git push ; & "C:\Program Files\GitHub CLI\gh.exe" release create v$version dist\LeverAction-Setup.exe --title "Lever Action v$version" --notes "Release" --repo nathanjstratusadv/lever-action
 
 msix:
 	@if (-not (Get-Command MakeAppx.exe -ErrorAction SilentlyContinue)) { winget install --id Microsoft.MSIX-Toolkit -e --accept-source-agreements --accept-package-agreements }

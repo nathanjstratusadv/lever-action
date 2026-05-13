@@ -1,0 +1,19 @@
+$manifest = @"
+PackageIdentifier: LeverAction
+Moniker: lever-action
+PackageVersion: 0.1.0
+Publisher: Nathan Johnson
+PackageName: Lever Action
+PackageDescription: Native Windows AI chat web app
+License: MIT
+Copyright: Copyright 2024 Nathan Johnson
+PackageUrl: https://github.com/nathan-johnson/lever_action
+Installers:
+  - Architecture: x64
+    InstallerLocale: en-US
+    Scope: user
+    InstallerType: nullsoft
+    InstallerUrl: https://github.com/nathan-johnson/lever_action/releases/download/v0.1.0/LeverAction-Setup.exe
+    SHA256: ccdfd6292dfeacf3f7fa9887005c02caae87e7ed5b45811f7ee8e2a707056265
+"@
+$manifest | Out-File -FilePath "winget\LeverAction\LeverAction.yaml" -Encoding utf8 -Force
