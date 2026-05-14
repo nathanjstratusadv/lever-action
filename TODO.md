@@ -6,11 +6,16 @@
 
 - [x] The prompt input scrolls off the screen when you have lots of text, the bar should grow upwards.
 - [x] Mouse hover tool tips near the edge of the screen go outside and are not readable.
+- [x] The Mouse hover tool tip is not showing for the target button.
 - [x] When the target context is to large is bleeds out of the button and on to the screen.
+- [x] When ever there is a new version or build it over writes the settings.json in the userprofile .config etc settings and makes you re configure every time you install.
+- [x] there is two settings.json files and the one in the src/lever_action directory is over writting the settings and probably should be removed.
+- [x] When you hit CTRL+SHIFT+C it does not do anything.
 
 ### Features
 
-- [x] When you hit CTRL+SHIFT+C it copies the last response body into the clipboard. Have a little pop-up notification to let you know it copied.
+- [x] When you hit CTRL+SHIFT+C it copies the last response body into the clipboard. 
+- [x] Have a little pop-up notification to let you know it copied.
 
 ### Changes
 
@@ -19,10 +24,12 @@
 - [x] The hotkeys in the guide are not accurate and need to reflect the actual hotkeys
 - [x] Make the Target context button another 20% wider.
 - [x] Improve the system prompt instructions for quick to focus on only providing the answer and no other filler content.
+- [x] The target context is on one line now for over flow control can we make it still have multiple lines but scroll when it gets to big.
 
 ### Build
 
 - [x] Update version and change log
+- [x] Update Readme to reflect
 - [x] Build new package and installer
 - [ ] Release new version on Github
 

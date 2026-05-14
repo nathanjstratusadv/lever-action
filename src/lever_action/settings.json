@@ -1,6 +1,0 @@
-{
-    "host": "api.anthropic.com",
-    "port": 443,
-    "api_key": "sk-ant-test",
-    "model": "claude-sonnet-4-20250514"
-}

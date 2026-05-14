@@ -371,9 +371,7 @@ async function saveSettings() {
 function updateTargetBadge() {
     const badge = document.getElementById("target-badge");
     if (currentTarget) {
-        const maxLen = 32;
-        const display = currentTarget.length > maxLen ? currentTarget.slice(0, maxLen) + "..." : currentTarget;
-        badge.textContent = "Target: " + display;
+        badge.innerHTML = `<span class="target-text">${escapeHtml("Target: " + currentTarget)}</span>`;
         badge.title = currentTarget;
         badge.classList.remove("empty");
         badge.classList.add("set");
@@ -562,7 +560,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     messagesContainer.setAttribute("tabindex", "0");
 
     document.addEventListener("keydown", (e) => {
-        if (e.key === "c" && e.ctrlKey && e.shiftKey) {
+        if ((e.key === "c" || e.key === "C") && e.ctrlKey && e.shiftKey) {
             e.preventDefault();
             copyLastResponse();
             return;

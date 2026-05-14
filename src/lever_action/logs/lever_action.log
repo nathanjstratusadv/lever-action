@@ -228,3 +228,308 @@ requests.exceptions.InvalidSchema: No connection adapters were found for '://:44
 2026-05-12 22:35:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
 2026-05-12 22:35:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
 2026-05-12 22:35:58 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:17:08 [INFO] __main__: Lever Action starting...
+2026-05-14 09:17:08 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-14 09:17:11 [WARNING] __main__: 404: /favicon.ico
+2026-05-14 09:18:08 [ERROR] __main__: Chat processing failed
+Traceback (most recent call last):
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\main.py", line 390, in chat
+    response_intel = chat_service.process(prompt)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\src\lever_action\services\chat_service.py", line 103, in process
+    response_intel = Bot(guidelines=guidelines).process(full_prompt)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\bot\bot.py", line 79, in process
+    return self.llm.prompt_to_intel(**kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\service.py", line 67, in prompt_to_intel
+    return self._llm_connector.prompt_to_intel(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        prompt=prompt,
+        ^^^^^^^^^^^^^^
+    ...<11 lines>...
+        replace_message_history=replace_message_history,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 136, in prompt_to_intel
+    response_intel_object = self._request_to_intel()
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 156, in _request_to_intel
+    self._http_request_to_response_str()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 66, in _http_request_to_response_str
+    self.response_str = http_connector.request_to_response(
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request_intel=self.llm_config.http_request_intel
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).json_data['choices'][0]['message']['content']
+    ^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\http\connector.py", line 23, in request_to_response
+    response_intel = request_intel.to_http_response_intel()
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\http\intelligence\intel.py", line 72, in to_http_response_intel
+    response = requests.request(
+        method=self.method,
+    ...<7 lines>...
+        timeout=settings.HTTP_CONNECTION_TIMEOUT_SECONDS,
+    )
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 697, in send
+    adapter = self.get_adapter(url=request.url)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 792, in get_adapter
+    raise InvalidSchema(f"No connection adapters were found for {url!r}")
+requests.exceptions.InvalidSchema: No connection adapters were found for '://:443api.anthropic.com/v1/chat/completions'
+2026-05-14 09:18:08 [DEBUG] __main__: Request body: {'prompt': 'dsadasdsad'}
+2026-05-14 09:21:48 [INFO] __main__: Lever Action starting...
+2026-05-14 09:21:48 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-14 09:21:50 [WARNING] __main__: 404: /favicon.ico
+2026-05-14 09:22:17 [ERROR] __main__: Chat processing failed
+Traceback (most recent call last):
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\main.py", line 390, in chat
+    response_intel = chat_service.process(prompt)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\src\lever_action\services\chat_service.py", line 103, in process
+    response_intel = Bot(guidelines=guidelines).process(full_prompt)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\bot\bot.py", line 79, in process
+    return self.llm.prompt_to_intel(**kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\service.py", line 67, in prompt_to_intel
+    return self._llm_connector.prompt_to_intel(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        prompt=prompt,
+        ^^^^^^^^^^^^^^
+    ...<11 lines>...
+        replace_message_history=replace_message_history,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 136, in prompt_to_intel
+    response_intel_object = self._request_to_intel()
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 156, in _request_to_intel
+    self._http_request_to_response_str()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 66, in _http_request_to_response_str
+    self.response_str = http_connector.request_to_response(
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request_intel=self.llm_config.http_request_intel
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).json_data['choices'][0]['message']['content']
+    ^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\http\connector.py", line 23, in request_to_response
+    response_intel = request_intel.to_http_response_intel()
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\http\intelligence\intel.py", line 72, in to_http_response_intel
+    response = requests.request(
+        method=self.method,
+    ...<7 lines>...
+        timeout=settings.HTTP_CONNECTION_TIMEOUT_SECONDS,
+    )
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 697, in send
+    adapter = self.get_adapter(url=request.url)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 792, in get_adapter
+    raise InvalidSchema(f"No connection adapters were found for {url!r}")
+requests.exceptions.InvalidSchema: No connection adapters were found for '://:443api.anthropic.com/v1/chat/completions'
+2026-05-14 09:22:17 [DEBUG] __main__: Request body: {'prompt': 'sadasd'}
+2026-05-14 09:33:35 [INFO] __main__: Lever Action starting...
+2026-05-14 09:33:35 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-14 09:33:37 [WARNING] __main__: 404: /favicon.ico
+2026-05-14 09:35:16 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:35:21 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 3317
+2026-05-14 09:35:21 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:35:21 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:35:21 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:35:21 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:36:20 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:36:22 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 972
+2026-05-14 09:36:22 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:36:22 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:36:22 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:36:22 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:36:34 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:36:36 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1261
+2026-05-14 09:36:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:36:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:36:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:36:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:37:05 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:37:06 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 463
+2026-05-14 09:37:06 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:37:06 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:37:06 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:37:06 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:37:10 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:37:11 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 448
+2026-05-14 09:37:11 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:37:11 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:37:11 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:37:11 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:37:22 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:37:27 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 2300
+2026-05-14 09:37:27 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:37:27 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:37:27 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:37:27 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:49:46 [INFO] __main__: Lever Action starting...
+2026-05-14 09:49:46 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-14 09:49:48 [WARNING] __main__: 404: /favicon.ico
+2026-05-14 09:50:32 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:50:33 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 445
+2026-05-14 09:50:33 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:50:33 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:50:33 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:50:33 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:54:28 [INFO] __main__: Lever Action starting...
+2026-05-14 09:54:28 [INFO] __main__: Starting Lever Action at http://127.0.0.1:8080
+2026-05-14 09:54:31 [WARNING] __main__: 404: /favicon.ico
+2026-05-14 09:55:52 [ERROR] __main__: Chat processing failed
+Traceback (most recent call last):
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\main.py", line 390, in chat
+    response_intel = chat_service.process(prompt)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\src\lever_action\services\chat_service.py", line 103, in process
+    response_intel = Bot(guidelines=guidelines).process(full_prompt)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\bot\bot.py", line 79, in process
+    return self.llm.prompt_to_intel(**kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\service.py", line 67, in prompt_to_intel
+    return self._llm_connector.prompt_to_intel(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        prompt=prompt,
+        ^^^^^^^^^^^^^^
+    ...<11 lines>...
+        replace_message_history=replace_message_history,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 136, in prompt_to_intel
+    response_intel_object = self._request_to_intel()
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 156, in _request_to_intel
+    self._http_request_to_response_str()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 66, in _http_request_to_response_str
+    self.response_str = http_connector.request_to_response(
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request_intel=self.llm_config.http_request_intel
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).json_data['choices'][0]['message']['content']
+    ^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\http\connector.py", line 23, in request_to_response
+    response_intel = request_intel.to_http_response_intel()
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\http\intelligence\intel.py", line 72, in to_http_response_intel
+    response = requests.request(
+        method=self.method,
+    ...<7 lines>...
+        timeout=settings.HTTP_CONNECTION_TIMEOUT_SECONDS,
+    )
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 697, in send
+    adapter = self.get_adapter(url=request.url)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 792, in get_adapter
+    raise InvalidSchema(f"No connection adapters were found for {url!r}")
+requests.exceptions.InvalidSchema: No connection adapters were found for '://:443api.anthropic.com/v1/chat/completions'
+2026-05-14 09:55:52 [DEBUG] __main__: Request body: {'prompt': 'asdsadas'}
+2026-05-14 09:56:19 [ERROR] __main__: Chat processing failed
+Traceback (most recent call last):
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\main.py", line 390, in chat
+    response_intel = chat_service.process(prompt)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\src\lever_action\services\chat_service.py", line 103, in process
+    response_intel = Bot(guidelines=guidelines).process(full_prompt)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\bot\bot.py", line 79, in process
+    return self.llm.prompt_to_intel(**kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\service.py", line 67, in prompt_to_intel
+    return self._llm_connector.prompt_to_intel(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        prompt=prompt,
+        ^^^^^^^^^^^^^^
+    ...<11 lines>...
+        replace_message_history=replace_message_history,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 136, in prompt_to_intel
+    response_intel_object = self._request_to_intel()
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 156, in _request_to_intel
+    self._http_request_to_response_str()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\llm\connector.py", line 66, in _http_request_to_response_str
+    self.response_str = http_connector.request_to_response(
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request_intel=self.llm_config.http_request_intel
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).json_data['choices'][0]['message']['content']
+    ^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\http\connector.py", line 23, in request_to_response
+    response_intel = request_intel.to_http_response_intel()
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\dandy\http\intelligence\intel.py", line 72, in to_http_response_intel
+    response = requests.request(
+        method=self.method,
+    ...<7 lines>...
+        timeout=settings.HTTP_CONNECTION_TIMEOUT_SECONDS,
+    )
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 697, in send
+    adapter = self.get_adapter(url=request.url)
+  File "C:\Users\NathanJohnson\PycharmProjects\lever-action\.venv\Lib\site-packages\requests\sessions.py", line 792, in get_adapter
+    raise InvalidSchema(f"No connection adapters were found for {url!r}")
+requests.exceptions.InvalidSchema: No connection adapters were found for '://:443api.anthropic.com/v1/chat/completions'
+2026-05-14 09:56:19 [DEBUG] __main__: Request body: {'prompt': 'give me a example of a django model'}
+2026-05-14 09:56:46 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:56:46 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 676
+2026-05-14 09:56:47 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:56:47 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:56:47 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:56:47 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:56:50 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:56:51 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 845
+2026-05-14 09:56:52 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:56:52 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:56:52 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:56:52 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:57:50 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:57:52 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1497
+2026-05-14 09:57:52 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:57:52 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:57:52 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:57:52 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:57:58 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:58:00 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1244
+2026-05-14 09:58:00 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:58:00 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:58:00 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:58:00 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:58:05 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:58:06 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1131
+2026-05-14 09:58:06 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:58:06 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:58:06 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:58:06 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:58:16 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:58:17 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 1534
+2026-05-14 09:58:17 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:58:17 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:58:17 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:58:17 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:58:28 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:58:36 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 5436
+2026-05-14 09:58:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:58:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:58:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:58:36 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".
+2026-05-14 09:58:44 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ai.api.lc.ca.stratusadv.com:443
+2026-05-14 09:58:47 [DEBUG] urllib3.connectionpool: https://ai.api.lc.ca.stratusadv.com:443 "POST /v1/chat/completions HTTP/1.1" 200 5328
+2026-05-14 09:58:47 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-05-14 09:58:47 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-05-14 09:58:47 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2026-05-14 09:58:47 [DEBUG] MARKDOWN: Successfully loaded extension "markdown.extensions.nl2br.Nl2BrExtension".

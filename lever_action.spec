@@ -11,7 +11,6 @@ a = Analysis(
         ('src/lever_action/services', 'services'),
         ('src/lever_action/storage', 'storage'),
         ('dandy_settings.py', '.'),
-        ('settings.json', '.'),
         ('reticle.ico', '.'),
     ],
     hiddenimports=[

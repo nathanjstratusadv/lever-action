@@ -16,8 +16,9 @@ Lever Action is a native Windows AI chat app built with the personality of a lev
 | **Target Context** | Pin persistent context that prepends to every prompt. |
 | **Chat History** | All exchanges saved to JSON — review past shots anytime. |
 | **Markdown + Syntax Highlighting** | Code blocks rendered in Monokai style via Pygments. |
+| **Copy Response** | `Ctrl+Shift+C` copies last response to clipboard with notification. |
+| **Text Selection** | Full text selection and copy support in chat messages. |
 | **Settings Modal** | Configure your LLM host, port, API key, and model in-app. |
-| **Keyboard Shortcuts** | `Ctrl+Enter` send, `Ctrl+T` toggle mode, `Ctrl+,` settings, and more. |
 
 ---
 
@@ -85,12 +86,17 @@ just msi        # MSI installer
 | Shortcut | Action |
 |----------|--------|
 | `Enter` | Send prompt |
+| `Shift + Enter` | New line in prompt |
 | `Ctrl + Enter` | Toggle mode |
 | `Ctrl + Shift + Enter` | Toggle guideline |
 | `Ctrl + Alt + Enter` | Open target modal |
+| `Ctrl + Shift + C` | Copy last response to clipboard |
 | `Ctrl + ,` | Open settings |
+| `Ctrl + R` | Reset chat |
 | `Escape` | Close modals |
-| `Arrow Up/Down` | Scroll messages |
+| `Arrow Up/Down` | Navigate prompt history (when typing) / Scroll messages (when focused) |
+| `Ctrl + Up/Down` | Scroll messages (while typing) |
+| `Page Up/Down` | Scroll messages by page (when focused) |
 
 ---
 

@@ -93,8 +93,10 @@
     <div id="settings-modal-overlay" class="modal-overlay" onclick="closeSettingsModal(event)" tabindex="-1">
         <div class="modal-content settings-modal" onclick="event.stopPropagation()" tabindex="-1">
             <div class="modal-tabs">
-                <button class="modal-tab active" data-tab="settings" onclick="switchSettingsTab('settings')">Settings</button>
-                <button class="modal-tab" data-tab="guide" onclick="switchSettingsTab('guide')">Guide</button>
+                <div class="modal-tab-group">
+                    <button class="modal-tab active" data-tab="settings" onclick="switchSettingsTab('settings')">Settings</button>
+                    <button class="modal-tab" data-tab="guide" onclick="switchSettingsTab('guide')">Guide</button>
+                </div>
                 <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
             </div>
             <div class="tab-content" id="settings-tab">
