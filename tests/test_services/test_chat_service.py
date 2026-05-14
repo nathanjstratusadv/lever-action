@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, patch
 
 from lever_action.services.chat_service import (
     CODE_FORMAT_GUIDELINE,
+    CONCISE_GUIDELINE,
     ChatMode,
     ChatService,
     GuidelineMode,
@@ -195,7 +196,7 @@ class TestChatService:
             service.process("Hello")
 
             mock_bot_cls.assert_called_once_with(
-                guidelines=f"Be concise. Give short, direct answers. {CODE_FORMAT_GUIDELINE}"
+                guidelines=f"{CONCISE_GUIDELINE} {CODE_FORMAT_GUIDELINE}"
             )
 
     def test_normal_guideline_passes_none_to_bot(self) -> None:

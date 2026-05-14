@@ -7,10 +7,11 @@ from dandy import Bot
 from dandy.llm.intelligence.prompts import service_system_prompt
 from dandy.llm.request.message import Message
 
-CONCISE_GUIDELINE = "Be concise. Give short, direct answers."
+CONCISE_GUIDELINE = "Be concise. Give short, direct answers. Skip filler content, greetings, and explanations unless asked."
 CODE_FORMAT_GUIDELINE = (
     "Always format code using fenced code blocks with triple backticks and "
-    "specify the language (e.g., ```python)."
+    "specify the language (e.g., ```python). Provide direct answers without "
+    "filler content, greetings, or unnecessary explanations."
 )
 
 

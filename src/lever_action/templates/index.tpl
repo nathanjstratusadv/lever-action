@@ -145,27 +145,43 @@
                             <span class="guide-desc">Concise responses. Shorter, to-the-point answers.</span>
                         </div>
                     </div>
+                    <h3>Target Context</h3>
+                    <div class="guide-section">
+                        <p class="guide-desc">Add persistent context that prepends to every prompt. Click the Target badge to set.</p>
+                    </div>
                     <h3>Hot Keys</h3>
                     <div class="guide-section">
                         <div class="guide-item">
-                            <kbd>Ctrl + Enter</kbd>
+                            <kbd>Enter</kbd>
                             <span class="guide-desc">Send prompt</span>
                         </div>
                         <div class="guide-item">
-                            <kbd>Ctrl + T</kbd>
+                            <kbd>Shift + Enter</kbd>
+                            <span class="guide-desc">New line in prompt</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Ctrl + Enter</kbd>
                             <span class="guide-desc">Toggle mode (Fire &amp; Forget / Aim &amp; Ask)</span>
                         </div>
                         <div class="guide-item">
-                            <kbd>Ctrl + Shift + T</kbd>
+                            <kbd>Ctrl + Shift + Enter</kbd>
                             <span class="guide-desc">Toggle guideline (Steady / Quick)</span>
                         </div>
                         <div class="guide-item">
-                            <kbd>Ctrl + Alt + T</kbd>
+                            <kbd>Ctrl + Alt + Enter</kbd>
                             <span class="guide-desc">Open target modal</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Ctrl + Shift + C</kbd>
+                            <span class="guide-desc">Copy last response to clipboard</span>
                         </div>
                         <div class="guide-item">
                             <kbd>Ctrl + ,</kbd>
                             <span class="guide-desc">Open settings</span>
+                        </div>
+                        <div class="guide-item">
+                            <kbd>Ctrl + R</kbd>
+                            <span class="guide-desc">Reset chat</span>
                         </div>
                         <div class="guide-item">
                             <kbd>Escape</kbd>
@@ -180,10 +196,6 @@
                             <span class="guide-desc">Scroll messages down (while typing)</span>
                         </div>
                         <div class="guide-item">
-                            <kbd>Ctrl + R</kbd>
-                            <span class="guide-desc">Reset chat</span>
-                        </div>
-                        <div class="guide-item">
                             <kbd>Arrow Up/Down</kbd>
                             <span class="guide-desc">Navigate prompt history (when typing)</span>
                         </div>
@@ -195,10 +207,6 @@
                             <kbd>Page Up/Down</kbd>
                             <span class="guide-desc">Scroll messages by page (when focused)</span>
                         </div>
-                    </div>
-                    <h3>Target Context</h3>
-                    <div class="guide-section">
-                        <p class="guide-desc">Add persistent context that prepends to every prompt. Click the Target badge to set.</p>
                     </div>
                 </div>
             </div>

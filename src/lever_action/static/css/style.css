@@ -142,6 +142,7 @@ body {
     border-radius: 4px;
     user-select: text;
     -webkit-user-select: text;
+    cursor: text;
     box-shadow:
         inset 0 1px 0 rgba(184, 115, 51, 0.15),
         0 2px 8px var(--shadow);
@@ -155,6 +156,7 @@ body {
     color: var(--parchment);
     user-select: text;
     -webkit-user-select: text;
+    cursor: text;
 }
 
 .message .response-text h1,
@@ -357,9 +359,10 @@ body {
 .input-wrapper {
     flex: 1;
     position: relative;
-    height: 48px;
+    min-height: 48px;
+    max-height: 200px;
     display: flex;
-    align-items: stretch;
+    align-items: flex-end;
 }
 
 #prompt-input {
@@ -557,7 +560,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 144px;
+    width: 173px;
     height: 48px;
     border: 1px solid var(--iron);
     border-radius: 3px;
@@ -571,7 +574,9 @@ body {
     padding: 4px 8px;
     text-align: center;
     line-height: 1.3;
-    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     background: var(--iron);
     font-family: Georgia, serif;
     box-shadow:
@@ -921,7 +926,7 @@ body {
     content: attr(tooltip);
     position: absolute;
     bottom: calc(100% + 8px);
-    left: 50%;
+    left: clamp(0px, calc(50% - 50px), 100%);
     transform: translateX(-50%);
     background: var(--leather);
     color: var(--parchment);
@@ -929,6 +934,9 @@ body {
     border-radius: 3px;
     font-size: 11px;
     white-space: nowrap;
+    max-width: calc(100vw - 16px);
+    overflow: hidden;
+    text-overflow: ellipsis;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.15s;
@@ -942,6 +950,31 @@ body {
 
 [tooltip]:hover::after {
     opacity: 1;
+}
+
+/* === Notification === */
+.notification {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--leather);
+    color: var(--parchment);
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: Georgia, serif;
+    border: 1px solid var(--border-stitch);
+    box-shadow: 0 4px 16px var(--shadow);
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    z-index: 2000;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
 /* === Responsive === */

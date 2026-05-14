@@ -4,6 +4,7 @@ let currentTarget = "";
 let currentSettings = {};
 let promptHistory = [];
 let promptHistoryIndex = -1;
+let lastResponseText = "";
 
 async function sendPrompt() {
     const input = document.getElementById("prompt-input");
@@ -130,10 +131,15 @@ function appendPromptOnly(prompt, mode) {
 }
 
 function completeMessage(el, responseHtml) {
+    lastResponseText = el.querySelector(".response-text")
+        ? el.querySelector(".response-text").textContent
+        : "";
     el.innerHTML += `
         <div class="entry-gap response-gap"></div>
         <div class="response-text">${responseHtml}</div>
     `;
+    const responseEl = el.querySelector(".response-text");
+    lastResponseText = responseEl ? responseEl.textContent : "";
     el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -365,11 +371,15 @@ async function saveSettings() {
 function updateTargetBadge() {
     const badge = document.getElementById("target-badge");
     if (currentTarget) {
-        badge.textContent = "Target: " + currentTarget;
+        const maxLen = 32;
+        const display = currentTarget.length > maxLen ? currentTarget.slice(0, maxLen) + "..." : currentTarget;
+        badge.textContent = "Target: " + display;
+        badge.title = currentTarget;
         badge.classList.remove("empty");
         badge.classList.add("set");
     } else {
         badge.textContent = "Target: None";
+        badge.title = "";
         badge.classList.remove("set");
         badge.classList.add("empty");
     }
@@ -475,6 +485,37 @@ function refocusInput() {
     }
 }
 
+function showNotification(message) {
+    let notification = document.getElementById("notification");
+    if (!notification) {
+        notification = document.createElement("div");
+        notification.id = "notification";
+        notification.className = "notification";
+        document.body.appendChild(notification);
+    }
+    notification.textContent = message;
+    notification.classList.add("show");
+    clearTimeout(notification._timeout);
+    notification._timeout = setTimeout(() => {
+        notification.classList.remove("show");
+    }, 2000);
+}
+
+function copyLastResponse() {
+    if (!lastResponseText) return;
+    navigator.clipboard.writeText(lastResponseText).then(() => {
+        showNotification("Copied to clipboard");
+    }).catch(() => {
+        const ta = document.createElement("textarea");
+        ta.value = lastResponseText;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        showNotification("Copied to clipboard");
+    });
+}
+
 let idleTimer = null;
 
 function resetIdleTimer() {
@@ -521,6 +562,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     messagesContainer.setAttribute("tabindex", "0");
 
     document.addEventListener("keydown", (e) => {
+        if (e.key === "c" && e.ctrlKey && e.shiftKey) {
+            e.preventDefault();
+            copyLastResponse();
+            return;
+        }
         if (e.target === input && (e.key === "ArrowDown" || e.key === "ArrowUp") && e.ctrlKey) {
             e.preventDefault();
             if (e.key === "ArrowDown") {

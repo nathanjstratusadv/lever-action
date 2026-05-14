@@ -79,6 +79,24 @@ Per-session `ChatService` + `HistoryStorage` instances are created on first requ
 - Global functions, no module wrapper
 - `fetch()` for all async calls; `escapeHtml()` for user input
 - Initialized via `DOMContentLoaded` listener in `app.js`
+- `lastResponseText` tracks last response for clipboard copy
+
+## Hot Keys
+
+| Shortcut | Action |
+|----------|--------|
+| `Enter` | Send prompt |
+| `Shift + Enter` | New line in prompt |
+| `Ctrl + Enter` | Toggle mode (Fire & Forget / Aim & Ask) |
+| `Ctrl + Shift + Enter` | Toggle guideline (Steady / Quick) |
+| `Ctrl + Alt + Enter` | Open target modal |
+| `Ctrl + Shift + C` | Copy last response to clipboard |
+| `Ctrl + ,` | Open settings |
+| `Ctrl + R` | Reset chat |
+| `Escape` | Close modals |
+| `Ctrl + Up/Down` | Scroll messages (while typing) |
+| `Arrow Up/Down` | Navigate prompt history (when typing) / Scroll messages (when focused) |
+| `Page Up/Down` | Scroll messages by page (when focused) |
 
 ## Chat Modes & Guidelines
 

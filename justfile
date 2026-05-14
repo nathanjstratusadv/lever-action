@@ -47,8 +47,7 @@ exe:
 	.\dist\lever_action\lever_action.exe
 
 release: package
-	$env:PATH += ";C:\Users\druge\AppData\Local\Programs\Inno Setup 6"
-	$version = & {{PYTHON}} -c "from lever_action import __version__; print(__version__)" ; git tag v$version ; $env:DistDir = "$PWD\dist\lever_action" ; & iscc installer\setup.iss ; git add -A ; git commit -m "Release v$version" ; git push ; & "C:\Program Files\GitHub CLI\gh.exe" release create v$version dist\LeverAction-Setup.exe --title "Lever Action v$version" --notes "Release" --repo nathanjstratusadv/lever-action
+	$version = & {{PYTHON}} -c "from lever_action import __version__; print(__version__)" ; powershell -ExecutionPolicy Bypass -File installer\build_msi.ps1 -Version $version ; git tag v$version ; git add -A ; git commit -m "Release v$version" ; git push ; & "C:\Program Files\GitHub CLI\gh.exe" release create v$version dist\LeverAction-Setup.exe --title "Lever Action v$version" --notes "Release" --repo nathanjstratusadv/lever-action
 
 msix:
 	@if (-not (Get-Command MakeAppx.exe -ErrorAction SilentlyContinue)) { winget install --id Microsoft.MSIX-Toolkit -e --accept-source-agreements --accept-package-agreements }
@@ -57,5 +56,4 @@ msix:
 	MakeAppx.exe package /d dist\lever_action /p lever_action.msix /v
 
 msi: package
-	@if (-not (Get-Command iscc -ErrorAction SilentlyContinue)) { winget install --id JRSoftware.InnoSetup -e --accept-source-agreements --accept-package-agreements }
-	$version = & .venv/Scripts/python.exe -c "from lever_action import __version__; print(__version__)" ; powershell -ExecutionPolicy Bypass -File installer\build_msi.ps1 -Version $version
+	$version = & {{PYTHON}} -c "from lever_action import __version__; print(__version__)" ; powershell -ExecutionPolicy Bypass -File installer\build_msi.ps1 -Version $version

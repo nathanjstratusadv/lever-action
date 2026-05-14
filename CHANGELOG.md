@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.4.0] - 2026-05-14
+
+### Fixed
+- Prompt input now grows upward instead of scrolling off screen
+- Tooltips near screen edges no longer overflow outside the viewport
+- Target context badge now truncates long text with ellipsis instead of bleeding
+
+### Added
+- Ctrl+Shift+C copies the last response to clipboard with popup notification
+- Target Context section moved above Hot Keys in the guide for better discoverability
+
+### Changed
+- Text selection cursor now appears on response and prompt text to indicate copyable content
+- Guide hotkeys updated to reflect actual keyboard shortcuts
+- Target context badge increased 20% wider (144px to 173px)
+- System prompt improved to focus on direct answers without filler content, greetings, or unnecessary explanations
+
 ## [0.3.0] - 2026-05-12
 
 ### Added
